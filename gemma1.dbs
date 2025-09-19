@@ -1,0 +1,2224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="PostgreSQL" database="PostgreSQL" id="dababd86-75b6-4ebf-8e83-be68153ad313" >
+	<schema name="gemma" catalogname="gemma" >
+		<comment><![CDATA[Esquema del gemma_cpr2025]]></comment>
+		<table name="cab_carga_archivo" row_count="0" spec="" >
+			<comment><![CDATA[Tabla detalle que almacena información del detalle de la carga de archivos.]]></comment>
+			<column name="n_carga_archivo_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('sq_cab_carga_archivo_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único de la carga del archivo (clave primaria).]]></comment>
+			</column>
+			<column name="n_archivo" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la columna archivo que referencia a la tabla "tab_archivo" (clave foránea).]]></comment>
+			</column>
+			<column name="n_activo" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que realizó la creación del registro de la carga del archivo.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro de la carga del archivo.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación del registro de la carga del archivo.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación del registro de la carga del archivo.]]></comment>
+			</column>
+			<column name="n_formato_plantilla" type="integer" length="32" >
+				<comment><![CDATA[Identificador de la columna formato o plantilla que referencia a la tabla "cab_formato_plantilla" (clave foránea). Puede ser nulo.]]></comment>
+			</column>
+			<index name="cst_cab_carga_archivo_pk" unique="PRIMARY_KEY" >
+				<column name="n_carga_archivo_pk" />
+			</index>
+			<fk name="cst_cab_carga_archivo_fk_01" to_schema="gemma.gemma" to_table="tab_archivo" options="" >
+				<fk_column name="n_archivo" pk="n_archivo_pk" />
+			</fk>
+		</table>
+		<table name="det_carga_archivo" row_count="0" spec="" >
+			<comment><![CDATA[Tabla detalle que almacena información del detalle de la carga de archivos.]]></comment>
+			<column name="n_det_carga_archivo_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('sq_det_carga_archivo_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del detalle de carga del archivo (clave primaria).]]></comment>
+			</column>
+			<column name="n_carga_archivo" type="smallint" length="16" mandatory="y" >
+				<comment><![CDATA[Identificador de la columna carga del archivo que referencia a la tabla "cab_carga_archivo" (clave foránea).]]></comment>
+			</column>
+			<column name="n_fila" type="smallint" length="16" mandatory="y" >
+				<comment><![CDATA[Número de fila del archivo correspondiente al dato cargado.]]></comment>
+			</column>
+			<column name="c_clave" type="varchar" length="150" mandatory="y" >
+				<comment><![CDATA[Nombre de la columna o campo leído del archivo.]]></comment>
+			</column>
+			<column name="c_valor" type="varchar" length="250" >
+				<comment><![CDATA[Valor correspondiente a la clave en la fila del archivo.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que realizó la creación del registro del detalle de la carga del archivo.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro del detalle de la carga del archivo.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación del registro del detalle de la carga del archivo.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación del registro del detalle de la carga del archivo.]]></comment>
+			</column>
+			<index name="cst_det_carga_archivo_pk" unique="PRIMARY_KEY" >
+				<column name="n_det_carga_archivo_pk" />
+			</index>
+			<fk name="cst_det_carga_archivo_fk_01" to_schema="gemma.gemma" to_table="cab_carga_archivo" options="" >
+				<fk_column name="n_carga_archivo" pk="n_carga_archivo_pk" />
+			</fk>
+		</table>
+		<table name="det_catalogo_estructura" row_count="30" spec="" >
+			<comment><![CDATA[Tabla detalle que almacena información de los elementos del catálogo, asociados a su estructura correspondiente.]]></comment>
+			<column name="n_det_catalogo_estructura_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('sq_det_catalogo_estructura_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del detalle del catálogo de la estructura (clave primaria).]]></comment>
+			</column>
+			<column name="n_catalogo" type="smallint" length="16" >
+				<comment><![CDATA[Identificador de la columna catálogo que referencia a la tabla "cab_catalogo" (clave foránea).]]></comment>
+			</column>
+			<column name="c_columna" type="varchar" length="50" >
+				<comment><![CDATA[Nombre de la columna a la que hace referencia el elemento del catálogo.]]></comment>
+			</column>
+			<column name="c_nombre" type="varchar" length="1000" >
+				<comment><![CDATA[Nombre del elemento del catálogo.]]></comment>
+			</column>
+			<column name="n_codigo" type="smallint" length="16" >
+				<comment><![CDATA[Código numérico del elemento del catálogo.]]></comment>
+			</column>
+			<column name="c_codigo" type="varchar" length="20" >
+				<comment><![CDATA[Código alfanumérico, utilizado para referenciar de manera resumida al detalle del catálogo.]]></comment>
+			</column>
+			<column name="n_orden" type="smallint" length="16" >
+				<comment><![CDATA[Orden secuencial asignado al elemento dentro del catálogo.]]></comment>
+			</column>
+			<column name="c_tipo" type="varchar" length="250" >
+				<comment><![CDATA[Tipo de elemento del catálogo.]]></comment>
+			</column>
+			<column name="c_informacion_adicional" type="varchar" length="1000" >
+				<comment><![CDATA[Información adicional asociada al elemento del catálogo.]]></comment>
+			</column>
+			<column name="n_obligatorio" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Indica si el elemento del catálogo es obligatorio (0: no, 1: sí). Valor asignado por defecto 0.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que realizó la creación del registro del detalle del catálogo de la estructura.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro del detalle del catálogo de la estructura.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación del registro del detalle del catálogo de la estructura.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación del registro del detalle del catálogo de la estructura.]]></comment>
+			</column>
+			<index name="cst_det_catalogo_estructura_pk" unique="PRIMARY_KEY" >
+				<column name="n_det_catalogo_estructura_pk" />
+			</index>
+		</table>
+		<table name="det_catalogo_referencia" row_count="0" spec="" >
+			<comment><![CDATA[Tabla detalle que almacena información de los elementos del catálogo, asociados a su referencia correspondiente.]]></comment>
+			<column name="n_det_catalogo_referencia_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('sq_det_catalogo_referencia_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del detalle del catálogo de la referencia (clave primaria).]]></comment>
+			</column>
+			<column name="n_catalogo" type="smallint" length="16" >
+				<comment><![CDATA[Identificador de la columna catálogo que referencia a la tabla "cab_catalogo" (clave foránea). Puede ser nulo.]]></comment>
+			</column>
+			<column name="c_tabla_referencia" type="varchar" length="250" >
+				<comment><![CDATA[Nombre de la tabla externa referenciada por el elemento del catálogo.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que realizó la creación del registro del detalle del catálogo de la referencia.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro del detalle del catálogo de la referencia.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación del registro del detalle del catálogo de la referencia.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación del registro del detalle del catálogo de la referencia.]]></comment>
+			</column>
+			<index name="cst_det_catalogo_referencia_pk" unique="PRIMARY_KEY" >
+				<column name="n_det_catalogo_referencia_pk" />
+			</index>
+		</table>
+		<table name="det_formato_plantilla" row_count="80" spec="" >
+			<comment><![CDATA[Tabla detalle que almacena información del detalle del formato de plantilla, los campos que se van a usar para la carga masiva.]]></comment>
+			<column name="n_det_formato_plantilla_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('sq_det_formato_plantilla_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del detalle del formato de la plantilla (clave primaria).]]></comment>
+			</column>
+			<column name="n_formato_plantilla" type="smallint" length="16" mandatory="y" >
+				<comment><![CDATA[Identificador de la columna formato o plantilla que referencia a la tabla "cab_formato_plantilla" (clave foránea).]]></comment>
+			</column>
+			<column name="c_cabecera" type="varchar" length="150" >
+				<comment><![CDATA[Nombre de la cabecera del campo en el archivo (columna del Excel).]]></comment>
+			</column>
+			<column name="c_clave" type="varchar" length="150" >
+				<comment><![CDATA[Clave o identificador interno del campo.]]></comment>
+			</column>
+			<column name="c_criterio_validacion" type="varchar" length="250" mandatory="y" >
+				<comment><![CDATA[Criterio o expresión utilizada para validar el contenido del campo.]]></comment>
+			</column>
+			<column name="c_mensaje_validacion" type="varchar" length="250" mandatory="y" >
+				<comment><![CDATA[Mensaje que se mostrará en caso de error de validación.]]></comment>
+			</column>
+			<column name="c_comentario" type="varchar" length="250" >
+				<comment><![CDATA[Comentario adicional sobre el campo o su uso.]]></comment>
+			</column>
+			<column name="n_unico" type="smallint" length="16" >
+				<comment><![CDATA[Indica si el campo debe tener valores únicos (0: no, 1: sí).]]></comment>
+			</column>
+			<column name="n_obligatorio" type="integer" length="32" >
+				<comment><![CDATA[Indica si el campo es obligatorio (0: no, 1: sí).]]></comment>
+			</column>
+			<column name="n_orden" type="smallint" length="16" >
+				<comment><![CDATA[Orden del campo dentro del archivo de plantilla.]]></comment>
+			</column>
+			<column name="c_dato" type="text" >
+				<comment><![CDATA[Dato de ejemplo o valor de referencia para el campo.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que realizó la creación del registro del detalle del formato de plantilla.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro del detalle del formato de plantilla.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación del registro del detalle del formato de plantilla.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación del registro del detalle del formato de plantilla.]]></comment>
+			</column>
+			<index name="cst_det_formato_plantilla_pk" unique="PRIMARY_KEY" >
+				<column name="n_det_formato_plantilla_pk" />
+			</index>
+		</table>
+		<table name="mae_ubigeo" row_count="2392" spec="" >
+			<comment><![CDATA[Tabla maestra que almacena información de los ubigeos.]]></comment>
+			<column name="n_ubigeo_pk" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador único del ubigeo (clave primaria).]]></comment>
+			</column>
+			<column name="n_ubigeo_padre" type="integer" length="32" >
+				<comment><![CDATA[Identificador de la columna ubigeo padre que referencia a la tabla "mae_ubigeo" (clave foránea). Puede ser nulo.]]></comment>
+			</column>
+			<column name="c_ubigeo" type="varchar" length="6" mandatory="y" >
+				<comment><![CDATA[Código del ubigeo.]]></comment>
+			</column>
+			<column name="c_nombre" type="varchar" length="250" mandatory="y" >
+				<comment><![CDATA[Nombre del ubigeo.]]></comment>
+			</column>
+			<column name="n_tipo_ambito_geografico" type="smallint" length="16" mandatory="y" >
+				<comment><![CDATA[Código que figura en el catálogo correspondiente al tipo de ámbito geográfico.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que realizó la creación del registro del ubigeo.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro del ubigeo.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación del registro del ubigeo.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación del registro del ubigeo.]]></comment>
+			</column>
+			<index name="cst_mae_ubigeo_pk" unique="PRIMARY_KEY" >
+				<column name="n_ubigeo_pk" />
+			</index>
+		</table>
+		<table name="tab_archivo" row_count="7" spec="" >
+			<comment><![CDATA[Tabla que almacena información de las cabeceras de los archivos que procesan pagos.]]></comment>
+			<column name="n_archivo_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('sq_tab_archivo_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del archivo (clave primaria).]]></comment>
+			</column>
+			<column name="c_guid_archivo" type="varchar" length="500" >
+				<comment><![CDATA[Identificador único global (GUID) del archivo, utilizado para referencias internas.]]></comment>
+			</column>
+			<column name="c_ruta_archivo" type="varchar" length="1000" >
+				<comment><![CDATA[Ruta del archivo almacenado en el sistema.]]></comment>
+			</column>
+			<column name="c_nombre_archivo" type="varchar" length="1000" mandatory="y" >
+				<comment><![CDATA[Nombre del archivo almacenado en el sistema.]]></comment>
+			</column>
+			<column name="c_nombre_original_archivo" type="varchar" length="1000" >
+				<comment><![CDATA[Nombre original del archivo antes de ser cargado al sistema.]]></comment>
+			</column>
+			<column name="c_formato_archivo" type="varchar" length="20" >
+				<comment><![CDATA[Extensión o tipo de formato del archivo (por ejemplo: .pdf, .jpg, .docx, etc.).]]></comment>
+			</column>
+			<column name="c_peso_archivo" type="varchar" length="50" >
+				<comment><![CDATA[Peso o tamaño del archivo en texto (por ejemplo: "1.2 MB", "300 KB", etc.).]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que realizó la creación del registro del archivo.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro del archivo.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación del registro del archivo.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación del registro del archivo.]]></comment>
+			</column>
+			<index name="cst_tab_archivo_pk" unique="PRIMARY_KEY" >
+				<column name="n_archivo_pk" />
+			</index>
+		</table>
+		<table name="tab_log" row_count="0" spec="" >
+			<comment><![CDATA[Tabla que almacena información de las capturas de las excepciones en base de datos.]]></comment>
+			<column name="n_log_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('sq_tab_log_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del log (clave primaria).]]></comment>
+			</column>
+			<column name="c_objeto" type="text" >
+				<comment><![CDATA[Nombre del objeto en el que se produjo la excepción.]]></comment>
+			</column>
+			<column name="d_fecha_error" type="timestamp" mandatory="y" >
+				<comment><![CDATA[Fecha y hora en que se generó el error.]]></comment>
+			</column>
+			<column name="c_sql_error" type="text" >
+				<comment><![CDATA[Tipo o categoría del error capturado.]]></comment>
+			</column>
+			<column name="c_sql_text" type="text" >
+				<comment><![CDATA[Texto SQL que generó la excepción.]]></comment>
+			</column>
+			<column name="c_sql_context" type="text" >
+				<comment><![CDATA[Contexto en el que se produjo la excepción.]]></comment>
+			</column>
+			<column name="c_sql_detail" type="text" >
+				<comment><![CDATA[Mensaje detallado del error capturado.]]></comment>
+			</column>
+			<column name="c_linea" type="varchar" length="1000" >
+				<comment><![CDATA[Línea del código en la que ocurrió el error.]]></comment>
+			</column>
+			<column name="c_usuario" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que registró el log.]]></comment>
+			</column>
+			<column name="c_mensaje" type="varchar" length="500" >
+				<comment><![CDATA[Mensaje principal del error registrado.]]></comment>
+			</column>
+			<column name="n_opcion" type="smallint" length="16" >
+				<comment><![CDATA[Identificador de la opción asociada al log.]]></comment>
+			</column>
+			<column name="n_modulo" type="smallint" length="16" >
+				<comment><![CDATA[Identificador del módulo donde ocurrió el error.]]></comment>
+			</column>
+			<column name="c_log" type="text" >
+				<comment><![CDATA[Descripción general del log registrado.]]></comment>
+			</column>
+			<column name="c_observacion" type="text" >
+				<comment><![CDATA[Observación adicional relacionada al log.]]></comment>
+			</column>
+			<column name="d_fecha_log" type="date" length="0" >
+				<comment><![CDATA[Fecha en que se registró el log.]]></comment>
+			</column>
+			<index name="cst_tab_log_pk" unique="PRIMARY_KEY" >
+				<column name="n_log_pk" />
+			</index>
+		</table>
+		<table name="tab_medio_pago_miembro_mesa" row_count="2260" spec="" >
+			<comment><![CDATA[Tabla que almacena información sobre los medios de pagos de los miembros de mesa.]]></comment>
+			<column name="n_medio_pago_miembro_mesa_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('sq_tab_medio_pago_miembro_mesa_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del medio de pago miembro de mesa (clave primaria).]]></comment>
+			</column>
+			<column name="n_proceso_electoral" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Código de proceso electoral.]]></comment>
+			</column>
+			<column name="n_miembro_mesa_escrutinio" type="integer" length="32" >
+				<comment><![CDATA[Identificador de la columna miembro de mesa escrutinio que referencia a la tabla "tab_miembro_mesa_escrutinio" (clave foránea). Puede ser nulo.]]></comment>
+			</column>
+			<column name="c_documento_identidad" type="varchar" length="10" mandatory="y" >
+				<comment><![CDATA[Número de documento de identidad.]]></comment>
+			</column>
+			<column name="n_entidad_bancaria" type="smallint" length="16" >
+				<comment><![CDATA[Código de entidad bancaria.]]></comment>
+			</column>
+			<column name="n_modalidad_pago" type="smallint" length="16" >
+				<comment><![CDATA[Código de modalidad de pago.]]></comment>
+			</column>
+			<column name="c_numero_cuenta" type="varchar" length="20" >
+				<comment><![CDATA[Número de cuenta en entidad bancaria.]]></comment>
+			</column>
+			<column name="n_billetera_digital" type="smallint" length="16" >
+				<comment><![CDATA[Código del tipo de billetera digital.]]></comment>
+			</column>
+			<column name="n_numero_vinculado" type="varchar" length="20" >
+				<comment><![CDATA[Número vinculado a la billetera digital.]]></comment>
+			</column>
+			<column name="n_vigente" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: no vigente, 1: vigente). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que realizó la creación del registro del medio de pago del miembro de mesa.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro del medio de pago del miembro de mesa.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación del registro del medio de pago del miembro de mesa.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación del registro del medio de pago del miembro de mesa.]]></comment>
+			</column>
+			<index name="cst_tab_medio_pago_miembro_mesa_pk" unique="PRIMARY_KEY" >
+				<column name="n_medio_pago_miembro_mesa_pk" />
+			</index>
+			<index name="inx_tab_medio_pago_miembro_mesa_01" unique="NORMAL" spec="USING  btree" >
+				<column name="c_documento_identidad" />
+			</index>
+			<fk name="cst_tab_medio_pago_miembro_mesa_fk_01" to_schema="gemma.gemma" to_table="tab_proceso_electoral" options="" >
+				<fk_column name="n_proceso_electoral" pk="n_proceso_electoral_pk" />
+			</fk>
+			<fk name="cst_tab_medio_pago_miembro_mesa_fk_02" to_schema="gemma.gemma" to_table="tab_miembro_mesa_escrutinio" options="" >
+				<fk_column name="n_miembro_mesa_escrutinio" pk="n_miembro_mesa_escrutinio_pk" />
+			</fk>
+		</table>
+		<table name="tab_miembro_mesa_escrutinio" row_count="2449" spec="" >
+			<comment><![CDATA[Tabla que almacena información de los miembros de mesa del escrutinio.]]></comment>
+			<column name="n_miembro_mesa_escrutinio_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('sq_tab_miembro_mesa_escrutinio_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del miembro de mesa del escrutinio (clave primaria).]]></comment>
+			</column>
+			<column name="n_proceso_electoral" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Código de proceso electoral.]]></comment>
+			</column>
+			<column name="c_mesa" type="varchar" length="6" >
+				<comment><![CDATA[Número de mesa de votación.]]></comment>
+			</column>
+			<column name="n_tipo_documento" type="smallint" length="16" mandatory="y" >
+				<comment><![CDATA[Tipo de documento de identidad.]]></comment>
+			</column>
+			<column name="c_documento_identidad" type="varchar" length="10" >
+				<comment><![CDATA[Número de documento de identidad.]]></comment>
+			</column>
+			<column name="c_apellido_paterno" type="varchar" length="100" >
+				<comment><![CDATA[Apellido paterno.]]></comment>
+			</column>
+			<column name="c_apellido_materno" type="varchar" length="100" >
+				<comment><![CDATA[Apellido materno.]]></comment>
+			</column>
+			<column name="c_nombres" type="varchar" length="100" >
+				<comment><![CDATA[Nombres.]]></comment>
+			</column>
+			<column name="n_cargo" type="smallint" length="16" mandatory="y" >
+				<comment><![CDATA[Cargo del miembro de mesa.]]></comment>
+			</column>
+			<column name="n_ubigeo" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Código de ubigeo de la mesa de votación.]]></comment>
+			</column>
+			<column name="n_fase" type="smallint" length="16" >
+				<comment><![CDATA[Código de fase de proceso de pago.]]></comment>
+			</column>
+			<column name="n_envio_01" type="smallint" length="16" >
+				<comment><![CDATA[Indicador de primer envió.]]></comment>
+			</column>
+			<column name="n_recepcionado_01" type="smallint" length="16" >
+				<comment><![CDATA[Indicador de primera recepción.]]></comment>
+			</column>
+			<column name="n_envio_02" type="smallint" length="16" >
+				<comment><![CDATA[Indicador de segundo envió.]]></comment>
+			</column>
+			<column name="n_recepcionado_02" type="smallint" length="16" >
+				<comment><![CDATA[Indicador de segunda recepción.]]></comment>
+			</column>
+			<column name="n_archivo_envio_01" type="integer" length="32" >
+				<comment><![CDATA[Indicador de primer archivo enviado.]]></comment>
+			</column>
+			<column name="n_archivo_recepcionado_01" type="integer" length="32" >
+				<comment><![CDATA[Indicador de primer archivo recepcionado.]]></comment>
+			</column>
+			<column name="n_archivo_envio_02" type="integer" length="32" >
+				<comment><![CDATA[Indicador de segundo archivo enviado.]]></comment>
+			</column>
+			<column name="n_archivo_recepcionado_02" type="integer" length="32" >
+				<comment><![CDATA[Indicador de segundo archivo recepcionado.]]></comment>
+			</column>
+			<column name="n_estado_pago" type="smallint" length="16" mandatory="y" >
+				<comment><![CDATA[Indicador de estado de pago.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que realizó la creación del registro del miembro de mesa del escrutinio.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro del miembro de mesa del escrutinio.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación del registro del miembro de mesa del escrutinio.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación del registro del miembro de mesa del escrutinio.]]></comment>
+			</column>
+			<column name="d_fecha_pago" type="date" length="0" >
+				<comment><![CDATA[Fecha de pago al miembro de mesa]]></comment>
+			</column>
+			<column name="n_estado_pago_programado" type="integer" length="32" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Indicador de estado de pago programado.]]></comment>
+			</column>
+			<index name="cst_tab_miembro_mesa_escrutinio_pk" unique="PRIMARY_KEY" >
+				<column name="n_miembro_mesa_escrutinio_pk" />
+			</index>
+			<index name="uk_miembro_mesa" unique="UNIQUE_KEY" >
+				<column name="n_proceso_electoral" />
+				<column name="c_mesa" />
+				<column name="c_documento_identidad" />
+			</index>
+			<index name="inx_tab_miembro_mesa_escrutinio_01" unique="NORMAL" spec="USING  btree" >
+				<column name="c_documento_identidad" />
+			</index>
+			<fk name="cst_tab_miembro_mesa_escrutinio_fk_01" to_schema="gemma.gemma" to_table="tab_proceso_electoral" options="" >
+				<fk_column name="n_proceso_electoral" pk="n_proceso_electoral_pk" />
+			</fk>
+		</table>
+		<table name="tab_miembro_mesa_escrutinio_seguimiento" row_count="6546" spec="" >
+			<comment><![CDATA[Tabla que almacena información del seguimiento del proceso de pagos a los miembros de mesa.]]></comment>
+			<column name="n_miembro_mesa_escrutinio_seguimiento_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('sq_tab_miembro_mesa_escrutinio_seguimiento_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del miembro de mesa escrutinio seguimiento (clave primaria).]]></comment>
+			</column>
+			<column name="n_miembro_mesa_escrutinio" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la columna miembro de mesa escrutinio que referencia a la tabla "tab_miembro_mesa_escrutinio" (clave foránea).]]></comment>
+			</column>
+			<column name="n_fase" type="smallint" length="16" >
+				<comment><![CDATA[Fase de proceso de pago.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que realizó la creación del registro del proceso de pago al miembro de mesa.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro del proceso de pago al miembro de mesa.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación del registro del proceso de pago al miembro de mesa.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación del registro del proceso de pago al miembro de mesa.]]></comment>
+			</column>
+			<index name="cst_tab_miembro_mesa_escrutinio_seguimiento_pk" unique="PRIMARY_KEY" >
+				<column name="n_miembro_mesa_escrutinio_seguimiento_pk" />
+			</index>
+			<fk name="cst_tab_miembro_mesa_escrutinio_seguimiento_fk_01" to_schema="gemma.gemma" to_table="tab_miembro_mesa_escrutinio" options="" >
+				<fk_column name="n_miembro_mesa_escrutinio" pk="n_miembro_mesa_escrutinio_pk" />
+			</fk>
+		</table>
+		<table name="tab_proceso_electoral" row_count="25" spec="" >
+			<comment><![CDATA[Tabla que almacena información del proceso electoral.]]></comment>
+			<column name="n_proceso_electoral_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('sq_tab_proceso_electoral_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del proceso electoral (clave primaria).]]></comment>
+			</column>
+			<column name="c_nombre" type="varchar" length="500" mandatory="y" >
+				<comment><![CDATA[Nombre del proceso electoral.]]></comment>
+			</column>
+			<column name="c_acronimo" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Nombre del acrónimo del proceso electoral.]]></comment>
+			</column>
+			<column name="b_logo" type="bytea" >
+				<comment><![CDATA[Imagen designado como Logo del proceso electoral.]]></comment>
+			</column>
+			<column name="c_nombre_logo" type="varchar" length="100" mandatory="y" >
+				<comment><![CDATA[Nombre del logo del proceso electoral.]]></comment>
+			</column>
+			<column name="d_fecha_convocatoria" type="date" length="0" mandatory="y" >
+				<comment><![CDATA[Fecha que se llevara a cabo el proceso electoral.]]></comment>
+			</column>
+			<column name="n_vigente" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: no vigente, 1: vigente). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que realizó la creación del registro del proceso electoral.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro del proceso electoral.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación del registro del proceso electoral.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación del registro del proceso electoral.]]></comment>
+			</column>
+			<column name="c_numero_desembolso" type="varchar" length="10" >
+				<comment><![CDATA[Número único del desembolso del proceso electoral.]]></comment>
+			</column>
+			<column name="n_cantidad_pagado" type="integer" length="32" >
+				<comment><![CDATA[Cantidad de miembros de mesa pagados.]]></comment>
+			</column>
+			<column name="n_cantidad_no_pagado" type="integer" length="32" >
+				<comment><![CDATA[Cantidad de miembros de mesa no pagados.]]></comment>
+			</column>
+			<index name="cst_tab_proceso_electoral_pk" unique="PRIMARY_KEY" >
+				<column name="n_proceso_electoral_pk" />
+			</index>
+		</table>
+		<table name="tab_ubigeo_proceso_electoral" row_count="348" spec="" >
+			<comment><![CDATA[Tabla que almacena información de Ubigeo y Proceso Electoral.]]></comment>
+			<column name="n_ubigeo_proceso_electoral_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('sq_tab_ubigeo_proceso_electoral_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del ubigeo y proceso electoral (clave primaria).]]></comment>
+			</column>
+			<column name="n_ubigeo" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la columna ubigeo que referencia a la tabla "mae_ubigeo" (clave foránea).]]></comment>
+			</column>
+			<column name="n_proceso_electoral" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la columna proceso electoral que referencia a la tabla "tab_proceso_electoral" (clave foránea).]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que realizó la creación del registro del ubigeo y proceso electoral.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro del ubigeo y proceso electoral.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación del registro del ubigeo y proceso electoral.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación del registro del ubigeo y proceso electoral.]]></comment>
+			</column>
+			<index name="cst_tab_ubigeo_proceso_electoral_pk" unique="PRIMARY_KEY" >
+				<column name="n_ubigeo_proceso_electoral_pk" />
+			</index>
+			<fk name="cst_tab_ubigeo_proceso_electoral_fk_01" to_schema="gemma.gemma" to_table="mae_ubigeo" options="" >
+				<fk_column name="n_ubigeo" pk="n_ubigeo_pk" />
+			</fk>
+			<fk name="cst_tab_ubigeo_proceso_electoral_fk_02" to_schema="gemma.gemma" to_table="tab_proceso_electoral" options="" >
+				<fk_column name="n_proceso_electoral" pk="n_proceso_electoral_pk" />
+			</fk>
+		</table>
+		<table name="usuarios" row_count="0" spec="" >
+			<column name="id" type="integer" length="32" mandatory="y" />
+			<column name="nombre" type="varchar" length="100" mandatory="y" />
+			<column name="email" type="varchar" length="100" mandatory="y" />
+			<column name="edad" type="integer" length="32" />
+			<column name="fecha_creacion" type="timestamp" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<index name="usuarios_pkey" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="usuarios_email_key" unique="UNIQUE_KEY" >
+				<column name="email" />
+			</index>
+		</table>
+		<table name="v_n_cantidad_detalle" row_count="0" spec="" >
+			<column name="count" type="bigint" length="64" />
+		</table>
+		<table name="v_n_cantidad_registros" row_count="0" spec="" >
+			<column name="count" type="bigint" length="64" />
+		</table>
+		<view name="vw_miembros_mesa_pago" >
+			<view_script><![CDATA[CREATE OR REPLACE VIEW ${view} AS SELECT tpe.n_proceso_electoral_pk,
+    tpe.c_nombre AS c_proceso_electoral,
+    tpe.d_fecha_convocatoria,
+    dce.c_nombre AS c_tipo_documento,
+    tmme.c_documento_identidad,
+    concat_ws(' '::text, tmme.c_apellido_paterno, tmme.c_apellido_materno, tmme.c_nombres) AS c_apellidos_nombres,
+    dce2.c_nombre AS c_cargo,
+    dce3.c_nombre AS c_entidad_bancaria,
+    dce4.c_nombre AS c_estado_pago,
+    dce5.c_nombre AS c_estado_pago_programado,
+    tmme.d_fecha_pago
+   FROM (((((((tab_miembro_mesa_escrutinio tmme
+     JOIN tab_medio_pago_miembro_mesa tmpmm ON (((tmpmm.n_miembro_mesa_escrutinio = tmme.n_miembro_mesa_escrutinio_pk) AND (tmpmm.n_activo = 1))))
+     JOIN tab_proceso_electoral tpe ON (((tpe.n_proceso_electoral_pk = tmpmm.n_proceso_electoral) AND (tpe.n_activo = 1))))
+     JOIN det_catalogo_estructura dce ON (((dce.n_codigo = tmme.n_tipo_documento) AND ((dce.c_columna)::text = 'n_tipo_documento_identidad'::text))))
+     JOIN det_catalogo_estructura dce2 ON (((dce2.n_codigo = tmme.n_cargo) AND ((dce2.c_columna)::text = 'n_cargo_miembro_mesa'::text) AND (dce2.n_activo = 1))))
+     JOIN det_catalogo_estructura dce3 ON ((((dce3.c_codigo)::integer = (tmpmm.n_entidad_bancaria)::integer) AND ((dce3.c_columna)::text = 'n_entidad_bancaria'::text) AND (dce3.n_activo = 1))))
+     JOIN det_catalogo_estructura dce4 ON (((dce4.n_codigo = tmme.n_estado_pago) AND ((dce4.c_columna)::text = 'n_estado_pago'::text) AND (dce4.n_activo = 1))))
+     JOIN det_catalogo_estructura dce5 ON (((dce5.n_codigo = tmme.n_estado_pago_programado) AND ((dce5.c_columna)::text = 'n_estado_pago_programado'::text) AND (dce5.n_activo = 1))))
+  WHERE (tmme.n_activo = 1)]]></view_script>
+			<column name="n_proceso_electoral_pk" type="integer" />
+			<column name="c_proceso_electoral" type="varchar" />
+			<column name="d_fecha_convocatoria" type="date" />
+			<column name="c_tipo_documento" type="varchar" />
+			<column name="c_documento_identidad" type="varchar" />
+			<column name="c_apellidos_nombres" type="text" />
+			<column name="c_cargo" type="varchar" />
+			<column name="c_entidad_bancaria" type="varchar" />
+			<column name="c_estado_pago" type="varchar" />
+			<column name="c_estado_pago_programado" type="varchar" />
+			<column name="d_fecha_pago" type="date" />
+		</view>
+		<sequence name="sq_cab_carga_archivo_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="sq_cab_catalogo_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="sq_cab_formato_plantilla_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="sq_cab_parametro_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="sq_det_carga_archivo_pk" options="START WITH 39 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="sq_det_catalogo_estructura_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="sq_det_catalogo_referencia_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="sq_det_formato_plantilla_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="sq_det_parametro_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="sq_tab_archivo_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="sq_tab_carga_pago_pk" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="sq_tab_log_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="sq_tab_medio_pago_miembro_mesa_pk" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="sq_tab_miembro_mesa_escrutinio_pk" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="sq_tab_miembro_mesa_escrutinio_seguimiento_pk" options="START WITH 0 INCREMENT BY 1 MINVALUE 0" />
+		<sequence name="sq_tab_miembro_mesa_escrutinio_trazabilidad_pk" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="sq_tab_pago_miembro_mesa_trazabilidad_pk" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="sq_tab_proceso_electoral_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="sq_tab_ubigeo_proceso_electoral_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<procedure name="sp_actualizar_pago_miembro_mesa_escrutinio" id="b94b0ff8-d85c-439d-b4a5-0e9907c3eede" isSystem="false" params_known="n" >
+			<string><![CDATA[create function sp_actualizar_pago_miembro_mesa_escrutinio 
+DECLARE
+    v_documento_identidad VARCHAR(20);
+    v_miembro_mesa_escrutinio INTEGER;
+    v_envio_01 INT;
+    v_recepcionado_01 INT;
+    v_envio_02 INT;
+    v_recepcionado_02 INT;
+    v_codigo_real INTEGER;
+    v_proceso_electoral INTEGER;
+BEGIN
+    v_documento_identidad := pi_documento_identidad;
+    -- 📌 Si enviaron el número de desembolso, recupero el proceso electoral y fijo entidad bancaria en 7
+    IF pi_numero_desembolso IS NOT NULL THEN
+        SELECT tpe.n_proceso_electoral_pk
+        INTO v_proceso_electoral
+        FROM tab_proceso_electoral tpe
+        WHERE tpe.c_numero_desembolso = pi_numero_desembolso
+        LIMIT 1;
+        IF v_proceso_electoral IS NULL THEN
+            RAISE EXCEPTION 'No se encontró proceso electoral con número de desembolso %', pi_numero_desembolso;
+        END IF;
+        pi_proceso_electoral := v_proceso_electoral;
+        pi_entidad_bancaria := 7;  -- se fuerza a 7
+    ELSE
+        v_proceso_electoral := pi_proceso_electoral;
+    END IF;
+    -- Traducir código de parámetro a código real
+    SELECT CASE pi_entidad_bancaria
+               WHEN 1 THEN 41
+               WHEN 2 THEN 42
+               WHEN 3 THEN 43
+               WHEN 4 THEN 44
+               WHEN 5 THEN 45
+               WHEN 6 THEN 6
+               WHEN 7 THEN 7
+           END
+    INTO v_codigo_real;
+    -- Buscar datos del miembro de mesa
+    SELECT mme.n_miembro_mesa_escrutinio_pk,
+           mme.n_envio_01,
+           mme.n_recepcionado_01,
+           mme.n_envio_02,
+           mme.n_recepcionado_02
+    INTO v_miembro_mesa_escrutinio, v_envio_01, v_recepcionado_01, v_envio_02, v_recepcionado_02
+    FROM gemma.tab_miembro_mesa_escrutinio mme
+    WHERE mme.c_documento_identidad = v_documento_identidad
+      AND mme.n_proceso_electoral = v_proceso_electoral
+    LIMIT 1;
+    IF NOT FOUND THEN
+        RAISE NOTICE 'No se encontró miembro de mesa con documento % en el proceso electoral %.', 
+                     v_documento_identidad, v_proceso_electoral;
+        RETURN;
+    END IF;
+    -- Depuración
+    RAISE NOTICE 'Datos obtenidos: envio_01=%, recep_01=%, tipo_op=%, entidad_bancaria=%, codigo_real=%', 
+                 v_envio_01, v_recepcionado_01, pi_tipo_operacion, pi_entidad_bancaria, v_codigo_real;
+    -- Caso 1: PAGADO
+    IF v_envio_01 = 1 AND v_recepcionado_01 IS NULL AND pi_tipo_operacion = 1 THEN
+        UPDATE gemma.tab_miembro_mesa_escrutinio
+        SET n_recepcionado_01 = 1,
+            n_estado_pago = 1,
+            n_fase = 4,
+            d_fecha_pago = CASE 
+                               WHEN pi_entidad_bancaria = 7 
+                               THEN pi_fecha_pago
+                               ELSE current_timestamp
+                           END
+        WHERE n_miembro_mesa_escrutinio_pk = v_miembro_mesa_escrutinio;
+        RAISE NOTICE 'Actualizado a PAGADO.';
+        RETURN;
+    -- Caso 2: NO PAGADO
+    ELSIF v_envio_01 = 1 AND v_recepcionado_01 IS NULL AND pi_tipo_operacion = 0 THEN
+        UPDATE gemma.tab_miembro_mesa_escrutinio
+        SET n_recepcionado_01 = 0
+        WHERE n_miembro_mesa_escrutinio_pk = v_miembro_mesa_escrutinio;
+        RAISE NOTICE 'Actualizado a NO PAGADO.';
+        -- Resetear datos si quedó como "No Pagado"
+        UPDATE gemma.tab_miembro_mesa_escrutinio 
+        SET n_recepcionado_01 = NULL,
+            n_fase = 3, --estaba null --pasamos a 3 --por ahora luego quitar --29-08-2025
+            n_envio_01 = 1 --estaba null --pasamos a 1 --por ahora luego quitar --29-08-2025
+        WHERE n_recepcionado_01 = 0
+          AND n_proceso_electoral = v_proceso_electoral
+          AND n_miembro_mesa_escrutinio_pk = v_miembro_mesa_escrutinio;
+        -- Actualizar datos en tab_medio_pago_miembro_mesa
+        UPDATE gemma.tab_medio_pago_miembro_mesa 
+        SET n_entidad_bancaria = 7, --pi_entidad_bancaria,
+            n_modalidad_pago = 2
+        WHERE n_proceso_electoral = v_proceso_electoral
+          AND n_miembro_mesa_escrutinio = v_miembro_mesa_escrutinio;
+        RETURN;
+    ELSE
+        RAISE NOTICE 'No se realizó ninguna actualización.';
+    END IF;
+END;
+]]></string>
+		</procedure>
+		<procedure name="sp_confirmar_envio_entidad_bancaria_1" id="32eb0e54-2fb1-4e0d-9671-7717eaaacf19" isSystem="false" params_known="n" >
+			<string><![CDATA[create function sp_confirmar_envio_entidad_bancaria_1 
+DECLARE
+    n_miembro_id INTEGER;
+    ya_existe INTEGER;
+BEGIN
+ 
+  -- Inicializar
+    po_status := 1;
+    po_mensaje := 'Operación realizada correctamente.';
+    FOR n_miembro_id IN
+        SELECT mme.n_miembro_mesa_escrutinio_pk
+        FROM gemma.tab_miembro_mesa_escrutinio mme
+        INNER JOIN gemma.tab_medio_pago_miembro_mesa pmm
+            ON pmm.n_proceso_electoral = mme.n_proceso_electoral
+            AND pmm.c_documento_identidad = mme.c_documento_identidad
+            AND pmm.n_activo = 1
+        WHERE mme.n_proceso_electoral = pi_n_proceso_electoral
+          AND pmm.n_entidad_bancaria = 41
+          AND mme.n_envio_01 IS NULL
+    LOOP
+ 
+     -- Validar si ya existe seguimiento con fase = 3
+        SELECT COUNT(*) INTO ya_existe
+        FROM gemma.tab_miembro_mesa_escrutinio_seguimiento
+        WHERE n_miembro_mesa_escrutinio = n_miembro_id
+          AND n_fase = 3;
+    
+    
+  IF ya_existe = 0 THEN
+            -- Actualizar tabla principal
+            UPDATE gemma.tab_miembro_mesa_escrutinio
+            SET n_envio_01 = 1,
+                n_fase = 3,
+                c_aud_usuario_modificacion = pi_usuario,
+                d_aud_fecha_modificacion = CURRENT_TIMESTAMP
+            WHERE n_miembro_mesa_escrutinio_pk = n_miembro_id;
+            -- Insertar seguimiento
+            INSERT INTO gemma.tab_miembro_mesa_escrutinio_seguimiento (
+                n_miembro_mesa_escrutinio,
+                n_fase,
+                n_activo,
+                c_aud_usuario_creacion
+            ) VALUES (
+                n_miembro_id,
+                3,
+                1,
+                pi_usuario
+            );
+        END IF;
+ END LOOP;
+  
+EXCEPTION
+    WHEN OTHERS THEN
+        po_status := 2;
+        po_mensaje := 'Error al procesar: ' || SQLERRM;      
+END;
+]]></string>
+		</procedure>
+		<procedure name="sp_generar_formatos_entidad_bancaria" id="1577f55f-680d-4ec3-bfb1-1f38d9b64993" isSystem="false" params_known="n" >
+			<string><![CDATA[create function sp_generar_formatos_entidad_bancaria 
+/************************************************************************************************************/
+/* Procedimiento que carga datos de plantilla excel que contiene los coordinadores de local de votacion  */
+/* Elaborado por: Dilmer Palomino Pardo Fecha de creación: 07/05/2025                */
+/* CALL gemma.sp_generar_formatos_entidad_bancaria('gemma','dpalomino',1,0, '');            */
+/* pi_n_carga_archivo:                      */
+/*       1 Banco Nacion                  */ 
+/*       2 BBVA                    */
+/*       3 BCP                    */ 
+/*       4 Interbank                   */
+/*       5 Scotiabank                  */
+/************************************************************************************************************/
+DECLARE
+    sQueryCrea  text;
+    v_context   text;
+    v_msg       text;
+    VC_PUBLIC   text := 'public';
+    VN_CARGA_PK integer;
+BEGIN
+    -- Establecer search_path
+    EXECUTE format('SET search_path TO %I, %I', pi_esquema, VC_PUBLIC);
+    -- Validar carga activa
+    SELECT n_carga_archivo_pk INTO VN_CARGA_PK
+    FROM cab_carga_archivo
+    WHERE n_carga_archivo_pk = pi_n_carga_archivo
+      AND n_activo = 1;
+    IF VN_CARGA_PK IS NULL THEN
+        po_resultado := -1;
+        po_mensaje := 'No se encontró la carga activa con el ID proporcionado';
+        RETURN;
+    END IF;
+ IF pi_n_carga_archivo <=4 THEN
+     -- Obtener SQL dinámico para crear la vista
+     SELECT fn_filacolumna(
+         pi_esquema,
+         'det_carga_archivo',
+         'n_fila',
+         'c_clave',
+         'c_valor',
+         'text',
+         VN_CARGA_PK
+     ) INTO sQueryCrea;
+ ELSEIF  pi_n_carga_archivo = 5 THEN
+  SELECT fn_filacolumna_v2(
+         pi_esquema,
+         'det_carga_archivo',
+         'n_fila',
+         'c_clave',
+         'c_valor',
+         'text',
+         VN_CARGA_PK
+     ) INTO sQueryCrea;
+ END IF;
+ -- Validación: evitar ejecución si el SQL es nulo o sospechosamente incorrecto
+ IF sQueryCrea IS NULL OR trim(sQueryCrea) = '' OR position('SELECT' in upper(sQueryCrea)) = 0 AND pi_n_carga_archivo <=4 THEN
+  po_resultado := -1;
+     po_mensaje := 'La función fn_filacolumna devolvió un SQL inválido';
+     RETURN;
+ END IF;
+ IF sQueryCrea IS NULL OR trim(sQueryCrea) = '' OR position('SELECT' in upper(sQueryCrea)) = 0 AND pi_n_carga_archivo =5  THEN
+  po_resultado := -1;
+     po_mensaje := 'La función fn_filacolumna_espacios devolvió un SQL inválido';
+     RETURN;
+ END IF;
+     -- Mostrar consulta generada
+     RAISE NOTICE 'Consulta generada: %', sQueryCrea;
+  -- BANCO DE LA NACION
+ IF pi_n_carga_archivo = 1 THEN
+     -- Crear vista con el SQL generado
+  BEGIN
+         EXECUTE format('CREATE OR REPLACE VIEW %I.vw_formatos_entidad_bancaria_nacion AS %s', pi_esquema, sQueryCrea);
+         po_resultado := 1;
+         po_mensaje := 'Vista creada correctamente';
+     EXCEPTION WHEN OTHERS THEN
+         GET STACKED DIAGNOSTICS v_context = PG_EXCEPTION_CONTEXT;
+         po_resultado := -1;
+         po_mensaje := 'Error al crear la vista: ' || SQLERRM;
+         -- Registrar en tabla log
+     END;        
+ END IF;
+ -- BANCO BBVA
+ IF pi_n_carga_archivo =2 THEN
+     -- Crear vista con el SQL generado
+     BEGIN
+         EXECUTE format('CREATE OR REPLACE VIEW %I.vw_formatos_entidad_bancaria_bbva AS %s', pi_esquema, sQueryCrea);
+         po_resultado := 1;
+         po_mensaje := 'Vista creada correctamente';
+     EXCEPTION WHEN OTHERS THEN
+         GET STACKED DIAGNOSTICS v_context = PG_EXCEPTION_CONTEXT;
+         po_resultado := -1;
+         po_mensaje := 'Error al crear la vista: ' || SQLERRM;
+         -- Registrar en tabla log
+     END;        
+ END IF;
+ -- BANCO BCP
+ IF pi_n_carga_archivo =3 THEN
+     -- Crear vista con el SQL generado
+     BEGIN
+         EXECUTE format('CREATE OR REPLACE VIEW %I.vw_formatos_entidad_bancaria_bcp AS %s', pi_esquema, sQueryCrea);
+         po_resultado := 1;
+         po_mensaje := 'Vista creada correctamente';
+     EXCEPTION WHEN OTHERS THEN
+         GET STACKED DIAGNOSTICS v_context = PG_EXCEPTION_CONTEXT;
+         po_resultado := -1;
+         po_mensaje := 'Error al crear la vista: ' || SQLERRM;
+         -- Registrar en tabla log
+     END;        
+ END IF;
+-- BANCO INTERBANK
+IF pi_n_carga_archivo =4 THEN
+     -- Crear vista con el SQL generado
+     BEGIN
+         EXECUTE format('CREATE OR REPLACE VIEW %I.vw_formatos_entidad_bancaria_interbank AS %s', pi_esquema, sQueryCrea);
+         po_resultado := 1;
+         po_mensaje := 'Vista creada correctamente';
+     EXCEPTION WHEN OTHERS THEN
+         GET STACKED DIAGNOSTICS v_context = PG_EXCEPTION_CONTEXT;
+         po_resultado := -1;
+         po_mensaje := 'Error al crear la vista: ' || SQLERRM;
+         -- Registrar en tabla log
+     END;        
+ END IF;
+-- BANCO SCOTIABANK
+IF pi_n_carga_archivo =5 THEN
+     -- Crear vista con el SQL generado
+     BEGIN
+         EXECUTE format('CREATE OR REPLACE VIEW %I.vw_formatos_entidad_bancaria_scotiabank AS %s', pi_esquema, sQueryCrea);
+         po_resultado := 1;
+         po_mensaje := 'Vista creada correctamente';
+     EXCEPTION WHEN OTHERS THEN
+         GET STACKED DIAGNOSTICS v_context = PG_EXCEPTION_CONTEXT;
+         po_resultado := -1;
+         po_mensaje := 'Error al crear la vista: ' || SQLERRM;
+         -- Registrar en tabla log
+     END;        
+ END IF;
+
+END;
+]]></string>
+		</procedure>
+		<procedure name="sp_list_generar_formatos_entidad_bancaria" id="fe5f07c5-ecce-4c39-92c5-f91a8b2b71d1" isSystem="false" params_known="n" >
+			<string><![CDATA[create function sp_list_generar_formatos_entidad_bancaria 
+/************************************************************************************************************/
+/* Procedimiento que carga datos de plantilla excel que contiene los coordinadores de local de votacion  */
+/* Elaborado por: Dilmer Palomino Pardo Fecha de creación: 07/05/2025                */
+/* CALL gemma.sp_generar_formatos_entidad_bancaria('gemma','dpalomino',1,0, '');            */
+/* pi_n_carga_archivo:                      */
+/*       1 Banco Nacion                  */ 
+/*       2 BBVA                    */
+/*       3 BCP                    */ 
+/*       4 Interbank                   */
+/*       5 Scotiabank                  */
+/************************************************************************************************************/
+DECLARE
+    sQueryCrea  text;
+    v_context   text;
+    v_msg       text;
+    VC_PUBLIC   text := 'public';
+    VN_CARGA_PK integer;
+BEGIN
+    -- Establecer search_path
+    EXECUTE format('SET search_path TO %I, %I', pi_esquema, VC_PUBLIC);
+    -- Validar carga activa
+    SELECT n_carga_archivo_pk INTO VN_CARGA_PK
+    FROM cab_carga_archivo
+    WHERE n_carga_archivo_pk = pi_n_carga_archivo
+      AND n_activo = 1;
+    IF VN_CARGA_PK IS NULL THEN
+        po_resultado := -1;
+        po_mensaje := 'No se encontró la carga activa con el ID proporcionado';
+        RETURN;
+    END IF;
+ IF pi_n_carga_archivo <=4 THEN
+     -- Obtener SQL dinámico para crear la vista
+     SELECT fn_filacolumna(
+         pi_esquema,
+         'det_carga_archivo',
+         'n_fila',
+         'c_clave',
+         'c_valor',
+         'text',
+         VN_CARGA_PK
+     ) INTO sQueryCrea;
+ ELSEIF  pi_n_carga_archivo = 5 THEN
+  SELECT fn_filacolumna_v2(
+         pi_esquema,
+         'det_carga_archivo',
+         'n_fila',
+         'c_clave',
+         'c_valor',
+         'text',
+         VN_CARGA_PK
+     ) INTO sQueryCrea;
+ END IF;
+ -- Validación: evitar ejecución si el SQL es nulo o sospechosamente incorrecto
+ IF sQueryCrea IS NULL OR trim(sQueryCrea) = '' OR position('SELECT' in upper(sQueryCrea)) = 0 AND pi_n_carga_archivo <=4 THEN
+  po_resultado := -1;
+     po_mensaje := 'La función fn_filacolumna devolvió un SQL inválido';
+     RETURN;
+ END IF;
+ IF sQueryCrea IS NULL OR trim(sQueryCrea) = '' OR position('SELECT' in upper(sQueryCrea)) = 0 AND pi_n_carga_archivo =5  THEN
+  po_resultado := -1;
+     po_mensaje := 'La función fn_filacolumna_espacios devolvió un SQL inválido';
+     RETURN;
+ END IF;
+     -- Mostrar consulta generada
+     RAISE NOTICE 'Consulta generada: %', sQueryCrea;
+  -- BANCO DE LA NACION
+ IF pi_n_carga_archivo = 1 THEN
+     -- Crear vista con el SQL generado
+  BEGIN
+         EXECUTE format('CREATE OR REPLACE VIEW %I.vw_formatos_entidad_bancaria_nacion AS %s', pi_esquema, sQueryCrea);
+         po_resultado := 1;
+         po_mensaje := 'Vista creada correctamente';
+     EXCEPTION WHEN OTHERS THEN
+         GET STACKED DIAGNOSTICS v_context = PG_EXCEPTION_CONTEXT;
+         po_resultado := -1;
+         po_mensaje := 'Error al crear la vista: ' || SQLERRM;
+         -- Registrar en tabla log
+     END;        
+ END IF;
+ -- BANCO BBVA
+ IF pi_n_carga_archivo =2 THEN
+     -- Crear vista con el SQL generado
+     BEGIN
+         EXECUTE format('CREATE OR REPLACE VIEW %I.vw_formatos_entidad_bancaria_bbva AS %s', pi_esquema, sQueryCrea);
+         po_resultado := 1;
+         po_mensaje := 'Vista creada correctamente';
+     EXCEPTION WHEN OTHERS THEN
+         GET STACKED DIAGNOSTICS v_context = PG_EXCEPTION_CONTEXT;
+         po_resultado := -1;
+         po_mensaje := 'Error al crear la vista: ' || SQLERRM;
+         -- Registrar en tabla log
+     END;        
+ END IF;
+ -- BANCO BCP
+ IF pi_n_carga_archivo =3 THEN
+     -- Crear vista con el SQL generado
+     BEGIN
+         EXECUTE format('CREATE OR REPLACE VIEW %I.vw_formatos_entidad_bancaria_bcp AS %s', pi_esquema, sQueryCrea);
+         po_resultado := 1;
+         po_mensaje := 'Vista creada correctamente';
+     EXCEPTION WHEN OTHERS THEN
+         GET STACKED DIAGNOSTICS v_context = PG_EXCEPTION_CONTEXT;
+         po_resultado := -1;
+         po_mensaje := 'Error al crear la vista: ' || SQLERRM;
+         -- Registrar en tabla log
+     END;        
+ END IF;
+-- BANCO INTERBANK
+IF pi_n_carga_archivo =4 THEN
+     -- Crear vista con el SQL generado
+     BEGIN
+         EXECUTE format('CREATE OR REPLACE VIEW %I.vw_formatos_entidad_bancaria_interbank AS %s', pi_esquema, sQueryCrea);
+         po_resultado := 1;
+         po_mensaje := 'Vista creada correctamente';
+     EXCEPTION WHEN OTHERS THEN
+         GET STACKED DIAGNOSTICS v_context = PG_EXCEPTION_CONTEXT;
+         po_resultado := -1;
+         po_mensaje := 'Error al crear la vista: ' || SQLERRM;
+         -- Registrar en tabla log
+     END;        
+ END IF;
+-- BANCO SCOTIABANK
+IF pi_n_carga_archivo =5 THEN
+     -- Crear vista con el SQL generado
+     BEGIN
+         EXECUTE format('CREATE OR REPLACE VIEW %I.vw_formatos_entidad_bancaria_scotiabank AS %s', pi_esquema, sQueryCrea);
+         po_resultado := 1;
+         po_mensaje := 'Vista creada correctamente';
+     EXCEPTION WHEN OTHERS THEN
+         GET STACKED DIAGNOSTICS v_context = PG_EXCEPTION_CONTEXT;
+         po_resultado := -1;
+         po_mensaje := 'Error al crear la vista: ' || SQLERRM;
+         -- Registrar en tabla log
+     END;        
+ END IF;
+
+END;
+]]></string>
+		</procedure>
+		<procedure name="sp_registrar_log" id="fbfc2741-ff10-412a-8e5c-33611668b373" isSystem="false" params_known="n" >
+			<string><![CDATA[create function sp_registrar_log 
+DECLARE
+    v_linea           varchar;
+ 
+BEGIN
+ EXECUTE 'set search_path =' ||pi_esquema;
+ 
+ CASE 
+  WHEN POSITION(' línea ' in pi_sql_context)>0 THEN 
+   v_linea := TRIM(SUBSTRING(pi_sql_context, 
+       POSITION(' línea ' in pi_sql_context)+1,
+       LENGTH(pi_sql_context)));
+       
+  WHEN POSITION(' line ' in pi_sql_context)>0 THEN 
+   v_linea := TRIM(SUBSTRING(pi_sql_context, 
+       POSITION(' line ' in pi_sql_context)+1,
+       LENGTH(pi_sql_context)));
+       
+  ELSE
+   v_linea := null;
+ END CASE;   
+    INSERT INTO tab_log
+      (c_objeto,
+      d_fecha_error,
+      c_sql_error,
+      c_sql_text,
+   c_sql_context,
+      c_linea,
+      c_usuario,
+      c_mensaje)
+    
+ VALUES
+      (pi_objeto,
+       CURRENT_TIMESTAMP,
+       pi_sql_error,
+       pi_sql_text,
+    pi_sql_context,
+       v_linea,
+       pi_usuario,
+       pi_mensaje);
+    --COMMIT;
+EXCEPTION
+      WHEN OTHERS THEN
+        RAISE NOTICE 'po_mensaje =>%', SQLERRM;
+  
+END;
+]]></string>
+		</procedure>
+		<function name="fn_actualizar_no_pagados_proceso_electoral" id="f01ca0d8-0553-49d4-935a-db6299116447" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_actualizar_no_pagados_proceso_electoral(pi_n_proceso_electoral integer)
+ RETURNS void
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+EXECUTE 'SET search_path = gemma';
+    UPDATE gemma.tab_proceso_electoral tpe
+    SET n_cantidad_no_pagado = COALESCE((
+            SELECT COUNT(*)
+            FROM gemma.tab_miembro_mesa_escrutinio mme
+            WHERE mme.n_proceso_electoral = tpe.n_proceso_electoral_pk
+              AND mme.n_estado_pago = 0
+        ), 0)
+    WHERE tpe.n_proceso_electoral_pk = pi_n_proceso_electoral;
+END;
+$function$
+;]]></string>
+			<input_param name="pi_n_proceso_electoral" jt="-1" type="integer" inOut="1" />
+		</function>
+		<function name="fn_actualizar_pagados_proceso_electoral" id="eb4db81b-1794-4991-88e0-f23ce17c828f" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_actualizar_pagados_proceso_electoral(pi_n_proceso_electoral integer)
+ RETURNS void
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+EXECUTE 'SET search_path = gemma';
+    UPDATE gemma.tab_proceso_electoral tpe
+    SET 
+        n_cantidad_pagado = COALESCE((
+            SELECT COUNT(*)
+            FROM gemma.tab_miembro_mesa_escrutinio mme
+            WHERE mme.n_proceso_electoral = tpe.n_proceso_electoral_pk
+              AND mme.n_estado_pago = 1
+        ),0),
+        n_cantidad_no_pagado = COALESCE((
+            SELECT COUNT(*)
+            FROM gemma.tab_miembro_mesa_escrutinio mme
+            WHERE mme.n_proceso_electoral = tpe.n_proceso_electoral_pk
+              AND mme.n_estado_pago = 0
+        ),0)
+    WHERE tpe.n_proceso_electoral_pk = pi_n_proceso_electoral;
+END;
+$function$
+;]]></string>
+			<input_param name="pi_n_proceso_electoral" jt="-1" type="integer" inOut="1" />
+		</function>
+		<function name="fn_confirmar_envio_entidad_bancaria" id="c7b1b84d-2e96-48e1-9ae7-f0ff08e0f476" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_confirmar_envio_entidad_bancaria(pi_n_proceso_electoral integer, pi_n_entidad_bancaria integer, pi_usuario character varying)
+ RETURNS integer
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+    n_miembro_id INTEGER;
+    ya_existe INTEGER;
+    n_registros_actualizados INTEGER := 0;
+    v_hay_registros BOOLEAN := FALSE;
+    v_proceso_existe BOOLEAN := FALSE;
+    v_codigo_real INTEGER;
+BEGIN
+    -- Traduce el código de parámetro a código real de tabla
+    SELECT CASE pi_n_entidad_bancaria
+               WHEN 1 THEN 41
+               WHEN 2 THEN 42
+               WHEN 3 THEN 43
+               WHEN 4 THEN 44
+               WHEN 5 THEN 45
+               WHEN 6 THEN 6
+               WHEN 7 THEN 7
+           END
+    INTO v_codigo_real;
+    -- Verifica si existe el proceso electoral
+    SELECT EXISTS (
+        SELECT 1
+        FROM gemma.tab_miembro_mesa_escrutinio
+        WHERE n_proceso_electoral = pi_n_proceso_electoral
+    ) INTO v_proceso_existe;
+    IF NOT v_proceso_existe THEN 
+        RETURN 0;  -- No existe el proceso
+    END IF;
+    -- Bucle por cada miembro de mesa con el código real
+    FOR n_miembro_id IN
+        SELECT mme.n_miembro_mesa_escrutinio_pk
+        FROM gemma.tab_miembro_mesa_escrutinio mme
+        INNER JOIN gemma.tab_medio_pago_miembro_mesa pmm
+               ON pmm.n_proceso_electoral = mme.n_proceso_electoral
+              AND pmm.c_documento_identidad = mme.c_documento_identidad
+              AND pmm.n_activo = 1
+        WHERE mme.n_proceso_electoral = pi_n_proceso_electoral
+          AND pmm.n_entidad_bancaria = v_codigo_real
+    LOOP
+        v_hay_registros := TRUE;
+        SELECT COUNT(*) INTO ya_existe
+        FROM gemma.tab_miembro_mesa_escrutinio_seguimiento mmes
+        INNER JOIN gemma.tab_miembro_mesa_escrutinio mme  
+                ON mme.n_miembro_mesa_escrutinio_pk = mmes.n_miembro_mesa_escrutinio
+        WHERE mmes.n_miembro_mesa_escrutinio = n_miembro_id 
+          AND mme.n_proceso_electoral = pi_n_proceso_electoral
+          AND mmes.n_fase = 3;
+        IF ya_existe = 0 THEN
+            UPDATE gemma.tab_miembro_mesa_escrutinio
+            SET n_envio_01 = 1,
+                n_fase = 3,
+                c_aud_usuario_modificacion = pi_usuario,
+                d_aud_fecha_modificacion = CURRENT_TIMESTAMP
+            WHERE n_miembro_mesa_escrutinio_pk = n_miembro_id;
+            INSERT INTO gemma.tab_miembro_mesa_escrutinio_seguimiento 
+                (n_miembro_mesa_escrutinio, n_fase, c_aud_usuario_creacion)
+            VALUES (n_miembro_id, 3, pi_usuario);
+            n_registros_actualizados := n_registros_actualizados + 1;
+        END IF;
+    END LOOP;
+    -- Resultado de la operación
+    IF n_registros_actualizados > 0 THEN
+        RETURN 1;  -- Se hicieron actualizaciones
+    ELSIF NOT v_hay_registros THEN
+        RETURN 2;  -- No hay datos a procesar aunque el proceso existe
+    ELSE
+        RETURN 2;  -- Ya estaban procesados
+    END IF;
+EXCEPTION
+    WHEN OTHERS THEN
+        RETURN 0;  -- Error inesperado
+END;
+$function$
+;]]></string>
+			<input_param name="pi_n_proceso_electoral" jt="-1" type="integer" inOut="1" />
+			<input_param name="pi_n_entidad_bancaria" jt="-1" type="integer" inOut="1" />
+			<input_param name="pi_usuario" jt="-1" type="character varying" inOut="1" />
+		</function>
+		<function name="fn_det_carga_archivo_banco" id="d3858857-f4ee-42af-b8c6-2c9851acc985" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_det_carga_archivo_banco(p_carga_archivo integer)
+ RETURNS SETOF record
+ LANGUAGE plpgsql
+AS $function$
+declare
+    l_sql text;
+begin
+    if p_carga_archivo = 1 then
+        -- Banco Nación: transaccion, cuenta, importe
+        l_sql := $sql$
+            select *
+            from crosstab(
+                $$select n_fila, c_clave, c_valor
+                  from gemma.det_carga_archivo
+                 where n_carga_archivo = 1
+                 order by n_fila, c_clave$$,
+                $$values ('transaccion'), ('cuenta'), ('importe') $$
+            ) AS ct (
+                n_fila int,
+				transaccion text,
+                cuenta text,
+                importe text 
+            )
+        $sql$;
+    else
+        raise exception  'Codigo de Banco % no esta registrado.', p_carga_archivo;
+    end if;
+    return QUERY execute l_sql;
+end
+$function$
+;]]></string>
+			<input_param name="p_carga_archivo" jt="-1" type="integer" inOut="1" />
+		</function>
+		<function name="fn_filacolumna" id="279e4427-988d-4a31-b0a6-1fa366481dc4" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_filacolumna(esquema character varying, tabla character varying, rowc character varying, colc character varying, cellc character varying, celldatatype character varying, idtipoarchivo integer)
+ RETURNS character varying
+ LANGUAGE plpgsql
+AS $function$
+declare
+    dynsql1 varchar;
+    dynsql2 varchar;
+    columnlist varchar;
+begin
+    -- 1. lista de columnas.
+    dynsql1 = 'select string_agg(distinct ''''||'||colc||'||'' '||celldatatype||''','','' order by ''''||'||colc||'||'' '||celldatatype||''') from '||esquema||'.'||tabla||' where n_carga_archivo='||idtipoarchivo||' and n_activo = 1;';
+    execute dynsql1 into columnlist;
+    -- 2. configura consulta 
+    dynsql2 = 'select * from public.crosstab (
+ ''select '||rowc||','||colc||','||cellc||' from '||esquema||'.'||tabla||' where n_carga_archivo='||idtipoarchivo||' and n_activo = 1 group by n_fila, c_clave, c_valor order by 1'',
+ ''select distinct '||colc||' from '||esquema||'.'||tabla||' where n_carga_archivo='||idtipoarchivo||' and n_activo = 1 order by 1''
+ )
+ as newtable (
+ '||rowc||' varchar,'||columnlist||'
+ );';
+    return dynsql2;
+end
+$function$
+;]]></string>
+			<input_param name="esquema" jt="-1" type="character varying" inOut="1" />
+			<input_param name="tabla" jt="-1" type="character varying" inOut="1" />
+			<input_param name="rowc" jt="-1" type="character varying" inOut="1" />
+			<input_param name="colc" jt="-1" type="character varying" inOut="1" />
+			<input_param name="cellc" jt="-1" type="character varying" inOut="1" />
+			<input_param name="celldatatype" jt="-1" type="character varying" inOut="1" />
+			<input_param name="idtipoarchivo" jt="-1" type="integer" inOut="1" />
+		</function>
+		<function name="fn_filacolumna_espacios" id="35eff9d6-4b06-4cee-ac06-de3bbaa8eb82" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_filacolumna_espacios(esquema character varying, tabla character varying, rowc character varying, colc character varying, cellc character varying, celldatatype character varying, idtipoarchivo integer)
+ RETURNS character varying
+ LANGUAGE plpgsql
+AS $function$
+-- Esta funcion se usa cuando los nombres de los campos contengan espacio en blanco. Ejemplo: CODIGO USUARIO, TIPO DOCUMENTO
+DECLARE
+    dynsql1 text;
+    dynsql2 text;
+    columnlist text;
+BEGIN
+    -- 1. Obtener lista de columnas
+    dynsql1 := format(
+        $$SELECT string_agg('"' || c_clave || '" %s', ',' ORDER BY c_clave)
+          FROM (
+            SELECT DISTINCT c_clave
+              FROM %I.%I
+             WHERE n_carga_archivo = %s AND n_activo = 1
+          ) sub;$$,
+        celldatatype, esquema, tabla, idtipoarchivo
+    );
+    EXECUTE dynsql1 INTO columnlist;
+    -- Validar si se obtuvo columnas válidas
+    IF columnlist IS NULL OR trim(columnlist) = '' THEN
+        RETURN NULL;
+    END IF;
+    -- 2. Construir sentencia del crosstab
+    dynsql2 := format(
+        $$SELECT * FROM public.crosstab(
+            'SELECT %I, %I, %I FROM %I.%I WHERE n_carga_archivo = %s AND n_activo = 1 GROUP BY %I, %I, %I ORDER BY 1',
+            'SELECT DISTINCT %I FROM %I.%I WHERE n_carga_archivo = %s AND n_activo = 1 ORDER BY 1'
+        ) AS newtable (
+            %I varchar,
+            %s
+        );$$,
+        rowc, colc, cellc,
+        esquema, tabla, idtipoarchivo,
+        rowc, colc, cellc,
+        colc, esquema, tabla, idtipoarchivo,
+        rowc, columnlist
+    );
+    RETURN dynsql2;
+END;
+$function$
+;]]></string>
+			<input_param name="esquema" jt="-1" type="character varying" inOut="1" />
+			<input_param name="tabla" jt="-1" type="character varying" inOut="1" />
+			<input_param name="rowc" jt="-1" type="character varying" inOut="1" />
+			<input_param name="colc" jt="-1" type="character varying" inOut="1" />
+			<input_param name="cellc" jt="-1" type="character varying" inOut="1" />
+			<input_param name="celldatatype" jt="-1" type="character varying" inOut="1" />
+			<input_param name="idtipoarchivo" jt="-1" type="integer" inOut="1" />
+		</function>
+		<function name="fn_listado_entidad_bancaria_1" id="656cbaeb-9251-4b6a-a792-9267bf14bea1" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_listado_entidad_bancaria_1(pi_n_proceso_electoral integer, pi_n_entidad_bancaria integer)
+ RETURNS TABLE(n_miembro_mesa_escrutinio_paginado_pk integer, transaccion text, num_cuenta text, importe text)
+ LANGUAGE plpgsql
+AS $function$
+/* Data estructurada para formato del Banco NACION */
+BEGIN
+    EXECUTE 'SET search_path = gemma';
+    RETURN QUERY
+    SELECT
+        ROW_NUMBER() OVER ()::INTEGER AS n_miembro_mesa_escrutinio_paginado_pk,
+        '061' AS transaccion,
+        RIGHT(pmm.c_numero_cuenta, 10) AS num_cuenta,
+		LPAD(CAST(COALESCE(null, 120) * 100 AS TEXT), 15, '0') AS importe
+    FROM gemma.tab_miembro_mesa_escrutinio mme
+    INNER JOIN gemma.tab_medio_pago_miembro_mesa pmm
+        ON pmm.n_proceso_electoral = mme.n_proceso_electoral
+        AND pmm.c_documento_identidad = mme.c_documento_identidad
+        AND pmm.n_activo = 1
+    WHERE mme.n_proceso_electoral = pi_n_proceso_electoral
+      AND pmm.n_entidad_bancaria = CASE 
+                                      WHEN pi_n_entidad_bancaria = 1 THEN 41 
+                                      ELSE pi_n_entidad_bancaria
+                                   END
+		AND (
+	        -- No enviado
+	        mme.n_envio_01 IS NULL 
+	        -- Enviado pero no recepcionado
+	        OR (mme.n_envio_01 IS NOT NULL AND mme.n_recepcionado_01 IS NULL) 
+        );
+END;
+$function$
+;]]></string>
+			<input_param name="pi_n_proceso_electoral" jt="-1" type="integer" inOut="1" />
+			<input_param name="pi_n_entidad_bancaria" jt="-1" type="integer" inOut="1" />
+			<input_param name="n_miembro_mesa_escrutinio_paginado_pk" jt="-1" type="integer" inOut="3" />
+			<input_param name="transaccion" jt="-1" type="text" inOut="3" />
+			<input_param name="num_cuenta" jt="-1" type="text" inOut="3" />
+			<input_param name="importe" jt="-1" type="text" inOut="3" />
+		</function>
+		<function name="fn_listado_entidad_bancaria_2" id="95eb9d9d-56a3-4897-8c98-993d52ee377e" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_listado_entidad_bancaria_2(pi_n_proceso_electoral integer, pi_n_entidad_bancaria integer)
+ RETURNS TABLE(n_miembro_mesa_escrutinio_paginado_pk integer, doi_tipo text, doi_numero text, tipo_abono text, cuenta text, nombre text, importe text)
+ LANGUAGE plpgsql
+AS $function$
+/* Data estructurada para formato del Banco BBVA */
+BEGIN
+    EXECUTE 'SET search_path = gemma';
+    RETURN QUERY
+    SELECT
+        ROW_NUMBER() OVER ()::INTEGER AS n_miembro_mesa_escrutinio_paginado_pk,
+        'L' AS doi_tipo,
+        mme.c_documento_identidad::text AS doi_numero,
+        'P' AS tipo_abono,
+		LEFT(pmm.c_numero_cuenta::text, 8) || '00' || RIGHT(pmm.c_numero_cuenta::text, 10) AS cuenta,
+		REPLACE(REPLACE(mme.c_apellido_paterno::text || ' ' || mme.c_apellido_materno::text || ' ' || mme.c_nombres::text,'Ñ', 'N'), 'ñ', 'n') AS nombre,
+		LPAD(TO_CHAR(COALESCE(null, 120), 'FM9999999999990.00'), 6, '0') AS importe
+    FROM gemma.tab_miembro_mesa_escrutinio mme
+    INNER JOIN gemma.tab_medio_pago_miembro_mesa pmm
+        ON pmm.n_proceso_electoral = mme.n_proceso_electoral
+        AND pmm.c_documento_identidad = mme.c_documento_identidad
+        AND pmm.n_activo = 1
+    WHERE mme.n_proceso_electoral = pi_n_proceso_electoral
+      AND pmm.n_entidad_bancaria = CASE 
+                                      WHEN pi_n_entidad_bancaria = 2 THEN 42
+                                      ELSE pi_n_entidad_bancaria
+                                   END
+		AND (
+	        -- No enviado
+	        mme.n_envio_01 IS NULL 
+	        -- Enviado pero no recepcionado
+	        OR (mme.n_envio_01 IS NOT NULL AND mme.n_recepcionado_01 IS NULL) 
+        );
+END;
+$function$
+;]]></string>
+			<input_param name="pi_n_proceso_electoral" jt="-1" type="integer" inOut="1" />
+			<input_param name="pi_n_entidad_bancaria" jt="-1" type="integer" inOut="1" />
+			<input_param name="n_miembro_mesa_escrutinio_paginado_pk" jt="-1" type="integer" inOut="3" />
+			<input_param name="doi_tipo" jt="-1" type="text" inOut="3" />
+			<input_param name="doi_numero" jt="-1" type="text" inOut="3" />
+			<input_param name="tipo_abono" jt="-1" type="text" inOut="3" />
+			<input_param name="cuenta" jt="-1" type="text" inOut="3" />
+			<input_param name="nombre" jt="-1" type="text" inOut="3" />
+			<input_param name="importe" jt="-1" type="text" inOut="3" />
+		</function>
+		<function name="fn_listado_entidad_bancaria_3" id="2b28d6d5-e90f-4848-8be5-3f1825fa4158" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_listado_entidad_bancaria_3(pi_n_proceso_electoral integer, pi_n_entidad_bancaria integer)
+ RETURNS TABLE(n_miembro_mesa_escrutinio_paginado_pk integer, tipo_registro text, tipo_cuenta_abono text, cuenta_abono text, tipo_doc text, nro_doc text, nombre text, moneda text, importe text, idc text)
+ LANGUAGE plpgsql
+AS $function$
+/* Data estructurada para formato del Banco BCP */
+BEGIN
+    EXECUTE 'SET search_path = gemma';
+    RETURN QUERY
+    SELECT
+        ROW_NUMBER() OVER ()::INTEGER AS n_miembro_mesa_escrutinio_paginado_pk,
+        'A' AS tipo_registro,
+        'A' AS tipo_cuenta_abono,
+        pmm.c_numero_cuenta::text AS cuenta_abono,
+        '1' AS tipo_doc,
+        mme.c_documento_identidad::text AS nro_doc,
+		REPLACE(REPLACE(mme.c_apellido_paterno::text || ' ' || mme.c_apellido_materno::text || ' ' || mme.c_nombres::text,'Ñ', 'N'), 'ñ', 'n') AS nombre,
+        'S' AS moneda,
+		LPAD(TO_CHAR(COALESCE(null, 120), 'FM9999999999990.00'), 17, '0') AS importe,
+        'S' AS idc
+    FROM gemma.tab_miembro_mesa_escrutinio mme
+    INNER JOIN gemma.tab_medio_pago_miembro_mesa pmm
+        ON pmm.n_proceso_electoral = mme.n_proceso_electoral
+        AND pmm.c_documento_identidad = mme.c_documento_identidad
+        AND pmm.n_activo = 1
+    WHERE mme.n_proceso_electoral = pi_n_proceso_electoral
+      AND pmm.n_entidad_bancaria = CASE 
+                                      WHEN pi_n_entidad_bancaria = 3 THEN 43
+                                      ELSE pi_n_entidad_bancaria
+                                   END
+		AND (
+	        -- No enviado
+	        mme.n_envio_01 IS NULL 
+	        -- Enviado pero no recepcionado
+	        OR (mme.n_envio_01 IS NOT NULL AND mme.n_recepcionado_01 IS NULL) 
+        );
+END;
+$function$
+;]]></string>
+			<input_param name="pi_n_proceso_electoral" jt="-1" type="integer" inOut="1" />
+			<input_param name="pi_n_entidad_bancaria" jt="-1" type="integer" inOut="1" />
+			<input_param name="n_miembro_mesa_escrutinio_paginado_pk" jt="-1" type="integer" inOut="3" />
+			<input_param name="tipo_registro" jt="-1" type="text" inOut="3" />
+			<input_param name="tipo_cuenta_abono" jt="-1" type="text" inOut="3" />
+			<input_param name="cuenta_abono" jt="-1" type="text" inOut="3" />
+			<input_param name="tipo_doc" jt="-1" type="text" inOut="3" />
+			<input_param name="nro_doc" jt="-1" type="text" inOut="3" />
+			<input_param name="nombre" jt="-1" type="text" inOut="3" />
+			<input_param name="moneda" jt="-1" type="text" inOut="3" />
+			<input_param name="importe" jt="-1" type="text" inOut="3" />
+			<input_param name="idc" jt="-1" type="text" inOut="3" />
+		</function>
+		<function name="fn_listado_entidad_bancaria_4" id="1cd4b01e-4cc8-4e6d-91ba-8c68dc1026ab" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_listado_entidad_bancaria_4(pi_n_proceso_electoral integer, pi_n_entidad_bancaria integer)
+ RETURNS TABLE(n_miembro_mesa_escrutinio_paginado_pk integer, codigo_de_entidad text, abono text, importe text, banco text, tipo_abono text, tipo_cuenta text, moneda_cuenta text, tienda text, num_cuenta text, tipo_persona text, tipo_doc text, nro_doc text, nombre text)
+ LANGUAGE plpgsql
+AS $function$
+/* Data estructurada para formato del Banco INTERBANK */
+BEGIN
+    EXECUTE 'SET search_path = gemma';
+    RETURN QUERY
+    SELECT
+        ROW_NUMBER() OVER ()::INTEGER AS n_miembro_mesa_escrutinio_paginado_pk,
+        mme.c_documento_identidad::text AS codigo_de_entidad,	
+        '01' AS abono,		
+		LPAD(TO_CHAR(COALESCE(null, 120), 'FM9999999999990.00'), 6, '0') AS importe,
+        '' AS banco,	
+        '09' AS tipo_abono,	
+        '002' AS tipo_cuenta,	
+        '01' AS moneda_cuenta,	
+        LEFT(pmm.c_numero_cuenta::text , 3) AS tienda,	
+        RIGHT(pmm.c_numero_cuenta::text, 10) AS num_cuenta,
+        'P' AS tipo_persona,	
+        '01' AS tipo_doc,	
+        mme.c_documento_identidad::text AS nro_doc,	
+		REPLACE(REPLACE(REPLACE(mme.c_apellido_paterno::text || ';' || mme.c_apellido_materno::text || ';' || mme.c_nombres::text, ' ', ';'),'Ñ', 'N'),'ñ', 'n') AS nombre
+    FROM gemma.tab_miembro_mesa_escrutinio mme
+    INNER JOIN gemma.tab_medio_pago_miembro_mesa pmm
+        ON pmm.n_proceso_electoral = mme.n_proceso_electoral
+        AND pmm.c_documento_identidad = mme.c_documento_identidad
+        AND pmm.n_activo = 1
+    WHERE mme.n_proceso_electoral = pi_n_proceso_electoral
+      AND pmm.n_entidad_bancaria = CASE 
+                                      WHEN pi_n_entidad_bancaria = 4 THEN 44
+                                      ELSE pi_n_entidad_bancaria
+                                   END
+		AND (
+	        -- No enviado
+	        mme.n_envio_01 IS NULL 
+	        -- Enviado pero no recepcionado
+	        OR (mme.n_envio_01 IS NOT NULL AND mme.n_recepcionado_01 IS NULL) 
+        );
+END;
+$function$
+;]]></string>
+			<input_param name="pi_n_proceso_electoral" jt="-1" type="integer" inOut="1" />
+			<input_param name="pi_n_entidad_bancaria" jt="-1" type="integer" inOut="1" />
+			<input_param name="n_miembro_mesa_escrutinio_paginado_pk" jt="-1" type="integer" inOut="3" />
+			<input_param name="codigo_de_entidad" jt="-1" type="text" inOut="3" />
+			<input_param name="abono" jt="-1" type="text" inOut="3" />
+			<input_param name="importe" jt="-1" type="text" inOut="3" />
+			<input_param name="banco" jt="-1" type="text" inOut="3" />
+			<input_param name="tipo_abono" jt="-1" type="text" inOut="3" />
+			<input_param name="tipo_cuenta" jt="-1" type="text" inOut="3" />
+			<input_param name="moneda_cuenta" jt="-1" type="text" inOut="3" />
+			<input_param name="tienda" jt="-1" type="text" inOut="3" />
+			<input_param name="num_cuenta" jt="-1" type="text" inOut="3" />
+			<input_param name="tipo_persona" jt="-1" type="text" inOut="3" />
+			<input_param name="tipo_doc" jt="-1" type="text" inOut="3" />
+			<input_param name="nro_doc" jt="-1" type="text" inOut="3" />
+			<input_param name="nombre" jt="-1" type="text" inOut="3" />
+		</function>
+		<function name="fn_listado_entidad_bancaria_5" id="83b97d6e-bb0d-454b-baba-b66b27879aaa" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_listado_entidad_bancaria_5(pi_n_proceso_electoral integer, pi_n_entidad_bancaria integer)
+ RETURNS TABLE(n_miembro_mesa_escrutinio_paginado_pk integer, codigo_empleado text, nombre_empleado text, concepto text, fecha_pago text, monto_pagar text, forma_pago text, codigo_oficina text, codigo_cuenta text, itf text, documento_identidad text, cci text)
+ LANGUAGE plpgsql
+AS $function$
+/* Data estructurada para formato del Banco SCOTIABANK */
+BEGIN
+    EXECUTE 'SET search_path = gemma';
+    RETURN QUERY
+    SELECT
+        ROW_NUMBER() OVER ()::INTEGER AS n_miembro_mesa_escrutinio_paginado_pk,
+        mme.c_documento_identidad::text AS codigo_empleado,	
+		REPLACE(REPLACE(mme.c_apellido_paterno::text || ' ' || mme.c_apellido_materno::text || ' ' || mme.c_nombres::text,'Ñ', 'N'), 'ñ', 'n') AS nombre_empleado,				
+        'PAGO AL MM' AS concepto,	
+        TO_CHAR(CURRENT_DATE + INTERVAL '1 day', 'YYYY-MM-DD') AS fecha_pago,
+		LPAD(TO_CHAR(COALESCE(null, 120), 'FM9999999999990.00'), 6, '0') AS monto_pagar,
+        '3' AS forma_pago,	
+        LEFT(pmm.c_numero_cuenta::text , 3) AS codigo_oficina,	
+        RIGHT(pmm.c_numero_cuenta::text, 7) AS codigo_cuenta,
+        '' AS itf,	
+        mme.c_documento_identidad::text AS documento_identidad,	
+        '' AS cci
+    FROM gemma.tab_miembro_mesa_escrutinio mme
+    INNER JOIN gemma.tab_medio_pago_miembro_mesa pmm
+        ON pmm.n_proceso_electoral = mme.n_proceso_electoral
+        AND pmm.c_documento_identidad = mme.c_documento_identidad
+        AND pmm.n_activo = 1
+    WHERE mme.n_proceso_electoral = pi_n_proceso_electoral
+      AND pmm.n_entidad_bancaria = CASE 
+                                      WHEN pi_n_entidad_bancaria = 5 THEN 45
+                                      ELSE pi_n_entidad_bancaria
+                                   END
+		AND (
+	        -- No enviado
+	        mme.n_envio_01 IS NULL 
+	        -- Enviado pero no recepcionado
+	        OR (mme.n_envio_01 IS NOT NULL AND mme.n_recepcionado_01 IS NULL) 
+        );
+END;
+$function$
+;]]></string>
+			<input_param name="pi_n_proceso_electoral" jt="-1" type="integer" inOut="1" />
+			<input_param name="pi_n_entidad_bancaria" jt="-1" type="integer" inOut="1" />
+			<input_param name="n_miembro_mesa_escrutinio_paginado_pk" jt="-1" type="integer" inOut="3" />
+			<input_param name="codigo_empleado" jt="-1" type="text" inOut="3" />
+			<input_param name="nombre_empleado" jt="-1" type="text" inOut="3" />
+			<input_param name="concepto" jt="-1" type="text" inOut="3" />
+			<input_param name="fecha_pago" jt="-1" type="text" inOut="3" />
+			<input_param name="monto_pagar" jt="-1" type="text" inOut="3" />
+			<input_param name="forma_pago" jt="-1" type="text" inOut="3" />
+			<input_param name="codigo_oficina" jt="-1" type="text" inOut="3" />
+			<input_param name="codigo_cuenta" jt="-1" type="text" inOut="3" />
+			<input_param name="itf" jt="-1" type="text" inOut="3" />
+			<input_param name="documento_identidad" jt="-1" type="text" inOut="3" />
+			<input_param name="cci" jt="-1" type="text" inOut="3" />
+		</function>
+		<function name="fn_listado_entidad_bancaria_6" id="1dd45c3f-fa4e-4569-8ad4-3fa34bddf1be" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_listado_entidad_bancaria_6(pi_n_proceso_electoral integer, pi_n_entidad_bancaria integer)
+ RETURNS TABLE(n_miembro_mesa_escrutinio_paginado_pk integer, dni text, nombre text, telefono text)
+ LANGUAGE plpgsql
+AS $function$
+/* Data estructurada para formato del YAPE */
+BEGIN
+    EXECUTE 'SET search_path = gemma';
+    RETURN QUERY
+    SELECT
+        ROW_NUMBER() OVER ()::INTEGER AS n_miembro_mesa_escrutinio_paginado_pk,
+        mme.c_documento_identidad::text AS dni,	
+		REPLACE(REPLACE(mme.c_apellido_paterno::text || ' ' || mme.c_apellido_materno::text || ' ' || mme.c_nombres::text,'Ñ', 'N'), 'ñ', 'n') AS nombre,				
+        pmm.n_numero_vinculado::text AS telefono
+    FROM gemma.tab_miembro_mesa_escrutinio mme
+    INNER JOIN gemma.tab_medio_pago_miembro_mesa pmm
+        ON pmm.n_proceso_electoral = mme.n_proceso_electoral
+        AND pmm.c_documento_identidad = mme.c_documento_identidad
+        AND pmm.n_activo = 1
+    WHERE mme.n_proceso_electoral = pi_n_proceso_electoral
+      AND pmm.n_entidad_bancaria = pi_n_entidad_bancaria
+		AND (
+	        -- No enviado
+	        mme.n_envio_01 IS NULL 
+	        -- Enviado pero no recepcionado
+	        OR (mme.n_envio_01 IS NOT NULL AND mme.n_recepcionado_01 IS NULL) 
+        );
+END;
+$function$
+;]]></string>
+			<input_param name="pi_n_proceso_electoral" jt="-1" type="integer" inOut="1" />
+			<input_param name="pi_n_entidad_bancaria" jt="-1" type="integer" inOut="1" />
+			<input_param name="n_miembro_mesa_escrutinio_paginado_pk" jt="-1" type="integer" inOut="3" />
+			<input_param name="dni" jt="-1" type="text" inOut="3" />
+			<input_param name="nombre" jt="-1" type="text" inOut="3" />
+			<input_param name="telefono" jt="-1" type="text" inOut="3" />
+		</function>
+		<function name="fn_listado_entidad_bancaria_7" id="11fc71ed-5be0-4ac1-a5a9-13f198a8250c" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_listado_entidad_bancaria_7(pi_n_proceso_electoral integer, pi_n_entidad_bancaria integer)
+ RETURNS TABLE(codigo_banco text, codigo_cliente text, num_registro text, importe_total_soles text, importe_total_dolares text, fecha_proceso text, tipo_registro text, espacios_blanco_cab text, codigo_credito text, num_desembolso text, situacion_desembolso text, clave text, codigo_moneda text, tipo_persona text, nombre_beneficiario text, tipo_documento_beneficiario text, num_documento_beneficiario text, nombre_representante text, tipo_documento_representante text, num_documento_representante text, importe_desembolso text, fecha_caducidad text, agencia_cobro text, tipo_datos text, codigo_interbancario text, cuenta_cliente text, orden_pago text, fecha_activacion text, espacios_blanco_det text)
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+    v_n_cantidad_detalle INTEGER;
+/* Data estructurada para formato del PRESENCIAL */
+BEGIN
+    EXECUTE 'SET search_path = gemma';
+    -- Verificar si el DETALLE devuelve registros
+    SELECT COUNT(*)
+    INTO v_n_cantidad_detalle
+    FROM gemma.tab_miembro_mesa_escrutinio mme
+    INNER JOIN gemma.tab_medio_pago_miembro_mesa pmm
+        ON pmm.n_proceso_electoral = mme.n_proceso_electoral
+        AND pmm.c_documento_identidad = mme.c_documento_identidad
+        AND pmm.n_activo = 1
+    WHERE mme.n_proceso_electoral = pi_n_proceso_electoral
+      AND pmm.n_entidad_bancaria = pi_n_entidad_bancaria
+      AND pmm.n_billetera_digital = 0
+	  and mme.n_estado_pago_programado = 0
+		AND (
+	        -- No enviado
+	        mme.n_envio_01 IS NULL 
+	        -- Enviado pero no recepcionado
+	        OR (mme.n_envio_01 IS NOT NULL AND mme.n_recepcionado_01 IS NULL) 
+        );
+    IF v_n_cantidad_detalle > 0 THEN
+        RETURN QUERY
+        -- CABECERA
+        SELECT
+			RPAD('018', 4, ' ')codigo_banco,
+            '0180101' AS codigo_cliente,
+            LPAD(v_n_cantidad_detalle::text, 7, '0') AS num_registro,
+            LPAD((SUM(COALESCE(120,0)) * 100)::text, 15, '0') AS importe_total_soles,
+            '000000000000000' AS importe_total_dolares,
+            --TO_CHAR(CURRENT_DATE, 'YYYYMMDD') AS fecha_proceso,
+			TO_CHAR(CURRENT_DATE + INTERVAL '1 day', 'YYYYMMDD') AS fecha_proceso,
+            '01' AS tipo_registro,
+            RPAD('', 226, ' ') AS espacios_blanco_cab,
+            NULL::text, NULL::text, NULL::text, NULL::text, NULL::text, NULL::text,
+            NULL::text, NULL::text, NULL::text, NULL::text, NULL::text, NULL::text,
+            NULL::text, NULL::text, NULL::text, NULL::text, NULL::text, NULL::text,
+            NULL::text, NULL::text, NULL::text
+        FROM gemma.tab_miembro_mesa_escrutinio mme
+        INNER JOIN gemma.tab_medio_pago_miembro_mesa pmm
+            ON pmm.n_proceso_electoral = mme.n_proceso_electoral
+            AND pmm.c_documento_identidad = mme.c_documento_identidad
+            AND pmm.n_activo = 1
+        WHERE mme.n_proceso_electoral = pi_n_proceso_electoral
+          AND pmm.n_entidad_bancaria = pi_n_entidad_bancaria
+		  and mme.n_estado_pago_programado = 0
+		AND (
+	        -- No enviado
+	        mme.n_envio_01 IS NULL 
+	        -- Enviado pero no recepcionado
+	        OR (mme.n_envio_01 IS NOT NULL AND mme.n_recepcionado_01 IS NULL) 
+        )
+        UNION ALL
+        -- DETALLE
+        SELECT
+            NULL::text, NULL::text, NULL::text, NULL::text, NULL::text, NULL::text, NULL::text, NULL::text,
+            '0000' || mme.c_documento_identidad::text,
+            '001', '01',
+            RIGHT(mme.c_documento_identidad::text, 4),
+            '1', '1',
+			RPAD(LEFT(REPLACE(REPLACE(CONCAT_WS(' ', mme.c_apellido_paterno, mme.c_apellido_materno, mme.c_nombres),'Ñ', 'N'),'ñ', 'n'),60),60,' '),
+            '010000000',
+            LPAD(mme.c_documento_identidad, 8, '0'),
+            RPAD('', 60, ' '),
+            '  ',
+            '               ',
+            LPAD((COALESCE(120, 0) * 100)::text, 15, '0'),
+            TO_CHAR(CURRENT_DATE + INTERVAL '1 day', 'YYYYMMDD'),
+            '0000', '01',
+            '00000000000000000000',
+            '00000282928',
+            '000000000001',
+            --TO_CHAR(CURRENT_DATE, 'YYYYMMDD'),
+			TO_CHAR(CURRENT_DATE + INTERVAL '1 day', 'YYYYMMDD'),
+            RPAD('', 23, ' ')
+        FROM gemma.tab_miembro_mesa_escrutinio mme
+        INNER JOIN gemma.tab_medio_pago_miembro_mesa pmm
+            ON pmm.n_proceso_electoral = mme.n_proceso_electoral
+            AND pmm.c_documento_identidad = mme.c_documento_identidad
+            AND pmm.n_activo = 1
+        WHERE mme.n_proceso_electoral = pi_n_proceso_electoral
+          AND pmm.n_entidad_bancaria = pi_n_entidad_bancaria
+		  and mme.n_estado_pago_programado = 0
+		AND (
+	        -- No enviado
+	        mme.n_envio_01 IS NULL 
+	        -- Enviado pero no recepcionado
+	        OR (mme.n_envio_01 IS NOT NULL AND mme.n_recepcionado_01 IS NULL) 
+        );
+    END IF;
+END;
+$function$
+;]]></string>
+			<input_param name="pi_n_proceso_electoral" jt="-1" type="integer" inOut="1" />
+			<input_param name="pi_n_entidad_bancaria" jt="-1" type="integer" inOut="1" />
+			<input_param name="codigo_banco" jt="-1" type="text" inOut="3" />
+			<input_param name="codigo_cliente" jt="-1" type="text" inOut="3" />
+			<input_param name="num_registro" jt="-1" type="text" inOut="3" />
+			<input_param name="importe_total_soles" jt="-1" type="text" inOut="3" />
+			<input_param name="importe_total_dolares" jt="-1" type="text" inOut="3" />
+			<input_param name="fecha_proceso" jt="-1" type="text" inOut="3" />
+			<input_param name="tipo_registro" jt="-1" type="text" inOut="3" />
+			<input_param name="espacios_blanco_cab" jt="-1" type="text" inOut="3" />
+			<input_param name="codigo_credito" jt="-1" type="text" inOut="3" />
+			<input_param name="num_desembolso" jt="-1" type="text" inOut="3" />
+			<input_param name="situacion_desembolso" jt="-1" type="text" inOut="3" />
+			<input_param name="clave" jt="-1" type="text" inOut="3" />
+			<input_param name="codigo_moneda" jt="-1" type="text" inOut="3" />
+			<input_param name="tipo_persona" jt="-1" type="text" inOut="3" />
+			<input_param name="nombre_beneficiario" jt="-1" type="text" inOut="3" />
+			<input_param name="tipo_documento_beneficiario" jt="-1" type="text" inOut="3" />
+			<input_param name="num_documento_beneficiario" jt="-1" type="text" inOut="3" />
+			<input_param name="nombre_representante" jt="-1" type="text" inOut="3" />
+			<input_param name="tipo_documento_representante" jt="-1" type="text" inOut="3" />
+			<input_param name="num_documento_representante" jt="-1" type="text" inOut="3" />
+			<input_param name="importe_desembolso" jt="-1" type="text" inOut="3" />
+			<input_param name="fecha_caducidad" jt="-1" type="text" inOut="3" />
+			<input_param name="agencia_cobro" jt="-1" type="text" inOut="3" />
+			<input_param name="tipo_datos" jt="-1" type="text" inOut="3" />
+			<input_param name="codigo_interbancario" jt="-1" type="text" inOut="3" />
+			<input_param name="cuenta_cliente" jt="-1" type="text" inOut="3" />
+			<input_param name="orden_pago" jt="-1" type="text" inOut="3" />
+			<input_param name="fecha_activacion" jt="-1" type="text" inOut="3" />
+			<input_param name="espacios_blanco_det" jt="-1" type="text" inOut="3" />
+		</function>
+		<function name="fn_listado_miembros_mesa" id="bba75957-9543-49a9-8b06-ec7bd7f7be8a" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_listado_miembros_mesa(pi_n_banco integer, pi_n_proceso_electoral integer)
+ RETURNS TABLE(n_miembro_mesa_escrutinio_paginado_pk integer, n_miembro_mesa_escrutinio_pk integer, n_proceso_electoral integer, c_mesa character varying, n_tipo_documento integer, c_documento_identidad character varying, c_apellido_paterno character varying, c_apellido_materno character varying, c_nombres character varying, n_cargo integer, n_ubigeo integer, n_envio_01 integer, n_recepcionado_01 integer, n_envio_02 integer, n_entidad_bancaria integer, n_modalidad_pago integer, c_numero_cuenta character varying, n_billetera_digital integer, n_numero_vinculado character varying, n_activo integer)
+ LANGUAGE plpgsql
+AS $function$
+	BEGIN
+		-- CREATE OR REPLACE FUNCTION gemma.fn_listado_entidad_bancaria(pi_esquema character varying, pi_n_banco integer, pi_n_proceso_electoral integer)
+    	--EXECUTE 'SET search_path =' || pi_esquema; 
+		EXECUTE 'SET search_path = gemma'; 
+    	RETURN QUERY
+    	select * from (
+        select 
+			ROW_NUMBER() OVER ()::INTEGER AS n_miembro_mesa_escrutinio_paginado_pk,
+			mme.n_miembro_mesa_escrutinio_pk,
+			mme.n_proceso_electoral ,
+			mme.c_mesa ,
+			mme.n_tipo_documento::integer ,
+			mme.c_documento_identidad ,
+			mme.c_apellido_paterno ,
+			mme.c_apellido_materno ,
+			mme.c_nombres ,
+			mme.n_cargo::integer ,
+			mme.n_ubigeo ,
+			mme.n_envio_01::integer ,
+			mme.n_recepcionado_01::integer ,
+			mme.n_envio_02::integer ,
+			pmm.n_entidad_bancaria::integer ,
+			pmm.n_modalidad_pago::integer ,
+			pmm.c_numero_cuenta ,
+			pmm.n_billetera_digital::integer ,
+			pmm.n_numero_vinculado ,
+			pmm.n_activo::integer 
+        from gemma.tab_miembro_mesa_escrutinio mme
+		inner join gemma.tab_medio_pago_miembro_mesa pmm on (pmm.n_proceso_electoral = mme.n_proceso_electoral 
+        	and pmm.c_documento_identidad = mme.c_documento_identidad)
+			and pmm.n_activo = 1 
+        ) rbco
+		where (rbco.n_proceso_electoral = pi_n_proceso_electoral) and 
+          	  (rbco.n_entidad_bancaria 	= pi_n_banco)  and
+			  (rbco.n_envio_01	is null) 
+       ORDER BY n_entidad_bancaria asc; 		
+END;
+$function$
+;]]></string>
+			<input_param name="pi_n_banco" jt="-1" type="integer" inOut="1" />
+			<input_param name="pi_n_proceso_electoral" jt="-1" type="integer" inOut="1" />
+			<input_param name="n_miembro_mesa_escrutinio_paginado_pk" jt="-1" type="integer" inOut="3" />
+			<input_param name="n_miembro_mesa_escrutinio_pk" jt="-1" type="integer" inOut="3" />
+			<input_param name="n_proceso_electoral" jt="-1" type="integer" inOut="3" />
+			<input_param name="c_mesa" jt="-1" type="character varying" inOut="3" />
+			<input_param name="n_tipo_documento" jt="-1" type="integer" inOut="3" />
+			<input_param name="c_documento_identidad" jt="-1" type="character varying" inOut="3" />
+			<input_param name="c_apellido_paterno" jt="-1" type="character varying" inOut="3" />
+			<input_param name="c_apellido_materno" jt="-1" type="character varying" inOut="3" />
+			<input_param name="c_nombres" jt="-1" type="character varying" inOut="3" />
+			<input_param name="n_cargo" jt="-1" type="integer" inOut="3" />
+			<input_param name="n_ubigeo" jt="-1" type="integer" inOut="3" />
+			<input_param name="n_envio_01" jt="-1" type="integer" inOut="3" />
+			<input_param name="n_recepcionado_01" jt="-1" type="integer" inOut="3" />
+			<input_param name="n_envio_02" jt="-1" type="integer" inOut="3" />
+			<input_param name="n_entidad_bancaria" jt="-1" type="integer" inOut="3" />
+			<input_param name="n_modalidad_pago" jt="-1" type="integer" inOut="3" />
+			<input_param name="c_numero_cuenta" jt="-1" type="character varying" inOut="3" />
+			<input_param name="n_billetera_digital" jt="-1" type="integer" inOut="3" />
+			<input_param name="n_numero_vinculado" jt="-1" type="character varying" inOut="3" />
+			<input_param name="n_activo" jt="-1" type="integer" inOut="3" />
+		</function>
+		<function name="fn_trg_insert_mm_escrutinio_seguimiento_fase1" id="ed8445f6-e57a-4fd1-9c95-ddad7018c152" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_trg_insert_mm_escrutinio_seguimiento_fase1()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+    INSERT INTO gemma.tab_miembro_mesa_escrutinio_seguimiento (
+        n_miembro_mesa_escrutinio,
+        n_fase,
+        c_aud_usuario_creacion
+    )
+    VALUES (
+        NEW.n_miembro_mesa_escrutinio_pk,
+        1,
+        NEW.c_aud_usuario_creacion
+    );
+    RETURN NEW;
+END;
+$function$
+;]]></string>
+			<result_param jt="-1" />
+		</function>
+		<function name="fn_trg_insert_mm_escrutinio_seguimiento_fase2" id="2b614667-1383-4335-a76a-eb0d0b8cb4ef" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_trg_insert_mm_escrutinio_seguimiento_fase2()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+  IF NEW.n_miembro_mesa_escrutinio IS NOT NULL THEN
+    INSERT INTO gemma.tab_miembro_mesa_escrutinio_seguimiento (
+      n_miembro_mesa_escrutinio,
+      n_fase,
+      c_aud_usuario_creacion
+    )
+    VALUES (
+      NEW.n_miembro_mesa_escrutinio,
+      2,                          -- Marcar fase 2 
+	 NEW.c_aud_usuario_creacion
+    );
+  END IF;
+  RETURN NEW;
+END;
+$function$
+;]]></string>
+			<result_param jt="-1" />
+		</function>
+		<function name="fn_trg_insert_mm_escrutinio_seguimiento_fase4" id="50c16558-1931-4f6f-bc13-0ff736b729eb" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_trg_insert_mm_escrutinio_seguimiento_fase4()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+  -- Verificar si en la tabla gemma.tab_miembro_mesa_escrutinio ocurrio un UPDATE
+  -- y si se actualizó los campos n_recepcionado_01 o n_archivo_recepcionado_02
+  IF (TG_OP = 'UPDATE') AND (
+      (NEW.n_recepcionado_01 = 1 AND (OLD.n_recepcionado_01 IS DISTINCT FROM NEW.n_recepcionado_01)) OR
+      (NEW.n_recepcionado_02 = 1 AND (OLD.n_recepcionado_02 IS DISTINCT FROM NEW.n_recepcionado_02))
+     )
+  THEN
+  -- Verifica si ya tiene marcado la fase 4
+    IF NOT EXISTS(SELECT * FROM gemma.tab_miembro_mesa_escrutinio_seguimiento mme
+		WHERE mme.n_miembro_mesa_escrutinio = NEW.n_miembro_mesa_escrutinio_pk AND mme.n_fase = 4) THEN
+	    
+		INSERT INTO gemma.tab_miembro_mesa_escrutinio_seguimiento (
+    	  n_miembro_mesa_escrutinio,
+	      n_fase,
+    	  c_aud_usuario_creacion
+    	)
+	    VALUES (
+    	  NEW.n_miembro_mesa_escrutinio_pk,
+	      4,                    			-- Valor fijo de n_fase
+    	  NEW.c_aud_usuario_creacion        -- Usuario que ejecuta
+    	);
+	END IF;
+  END IF;
+  RETURN NEW;
+END;
+$function$
+;]]></string>
+			<result_param jt="-1" />
+		</function>
+		<function name="fn_trg_insert_tab_ubigeo_proceso_electoral" id="61cad415-2b20-432f-b649-d33ab1a49482" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION gemma.fn_trg_insert_tab_ubigeo_proceso_electoral()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+BEGIN  
+	IF (NOT EXISTS(SELECT * FROM gemma.tab_ubigeo_proceso_electoral upe 
+			WHERE upe.n_ubigeo = NEW.n_ubigeo AND upe.n_proceso_electoral =  NEW.n_proceso_electoral)) THEN
+	
+	    INSERT INTO gemma.tab_ubigeo_proceso_electoral(
+	        n_ubigeo,
+			n_proceso_electoral,
+	        c_aud_usuario_creacion)
+	    VALUES (
+	        NEW.n_ubigeo,
+	        NEW.n_proceso_electoral,
+	        NEW.c_aud_usuario_creacion);
+  	END IF;
+  RETURN NEW;
+END;
+$function$
+;]]></string>
+			<result_param jt="-1" />
+		</function>
+		<trigger name="trg_insert_mm_escrutinio_seguimiento_fase1" table="tab_miembro_mesa_escrutinio" id="be80acb7-e161-45d6-990e-15c4999cf89c" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER trg_insert_mm_escrutinio_seguimiento_fase1 AFTER INSERT ON gemma.tab_miembro_mesa_escrutinio FOR EACH ROW EXECUTE FUNCTION fn_trg_insert_mm_escrutinio_seguimiento_fase1()]]></string>
+		</trigger>
+		<trigger name="trg_insert_mm_escrutinio_seguimiento_fase2" table="tab_medio_pago_miembro_mesa" id="1c24c2fd-2f10-41a0-83d5-c0fb0758dd0c" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER trg_insert_mm_escrutinio_seguimiento_fase2 AFTER INSERT ON gemma.tab_medio_pago_miembro_mesa FOR EACH ROW EXECUTE FUNCTION fn_trg_insert_mm_escrutinio_seguimiento_fase2()]]></string>
+		</trigger>
+		<trigger name="trg_insert_mm_escrutinio_seguimiento_fase4" table="tab_miembro_mesa_escrutinio" id="32f5ac6b-58c4-479f-a89f-df0d821ed71f" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER trg_insert_mm_escrutinio_seguimiento_fase4 AFTER UPDATE ON gemma.tab_miembro_mesa_escrutinio FOR EACH ROW EXECUTE FUNCTION fn_trg_insert_mm_escrutinio_seguimiento_fase4()]]></string>
+		</trigger>
+		<trigger name="trg_insert_tab_ubigeo_proceso_electoral" table="tab_miembro_mesa_escrutinio" id="d57d5d64-1235-4630-bf4b-fb91e22e8311" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER trg_insert_tab_ubigeo_proceso_electoral AFTER INSERT ON gemma.tab_miembro_mesa_escrutinio FOR EACH ROW EXECUTE FUNCTION fn_trg_insert_tab_ubigeo_proceso_electoral()]]></string>
+		</trigger>
+	</schema>
+	<schema name="public" catalogname="gemma" >
+		<comment><![CDATA[standard public schema]]></comment>
+	</schema>
+	<layout name="gemma" id="65a38d32-004c-424c-b1e7-bb31e0a9e45d" show_relation="columns" >
+		<entity schema="gemma.gemma" name="cab_carga_archivo" color="C7F4BE" x="836" y="456" />
+		<entity schema="gemma.gemma" name="det_carga_archivo" color="C7F4BE" x="1406" y="1710" />
+		<entity schema="gemma.gemma" name="det_catalogo_estructura" color="C7F4BE" x="1482" y="779" />
+		<entity schema="gemma.gemma" name="det_catalogo_referencia" color="C7F4BE" x="1482" y="1254" />
+		<entity schema="gemma.gemma" name="det_formato_plantilla" color="C7F4BE" x="1159" y="779" />
+		<entity schema="gemma.gemma" name="mae_ubigeo" color="F4DDBE" x="57" y="817" />
+		<entity schema="gemma.gemma" name="tab_archivo" color="C7F4BE" x="836" y="1254" />
+		<entity schema="gemma.gemma" name="tab_log" color="C7F4BE" x="1159" y="1254" />
+		<entity schema="gemma.gemma" name="tab_medio_pago_miembro_mesa" color="F4DDBE" x="380" y="1178" />
+		<entity schema="gemma.gemma" name="tab_miembro_mesa_escrutinio" color="C7F4BE" x="1159" y="95" />
+		<entity schema="gemma.gemma" name="tab_miembro_mesa_escrutinio_seguimiento" color="C7F4BE" x="760" y="931" />
+		<entity schema="gemma.gemma" name="tab_proceso_electoral" color="F4DDBE" x="57" y="1178" />
+		<entity schema="gemma.gemma" name="tab_ubigeo_proceso_electoral" color="F4DDBE" x="380" y="817" />
+		<entity schema="gemma.gemma" name="usuarios" color="BED3F4" x="152" y="95" />
+		<entity schema="gemma.gemma" name="v_n_cantidad_detalle" color="BED3F4" x="399" y="95" />
+		<entity schema="gemma.gemma" name="v_n_cantidad_registros" color="BED3F4" x="133" y="361" />
+		<entity schema="gemma.gemma" name="vw_miembros_mesa_pago" color="BED3F4" x="399" y="361" />
+		<group name="usuarios" color="ECF0F7" >
+			<entity schema="gemma.gemma" name="usuarios" />
+			<entity schema="gemma.gemma" name="v_n_cantidad_detalle" />
+			<entity schema="gemma.gemma" name="vw_miembros_mesa_pago" />
+			<entity schema="gemma.gemma" name="v_n_cantidad_registros" />
+		</group>
+		<group name="det_formato_plantilla" color="EEF7EC" >
+			<entity schema="gemma.gemma" name="det_formato_plantilla" />
+			<entity schema="gemma.gemma" name="det_catalogo_estructura" />
+			<entity schema="gemma.gemma" name="det_catalogo_referencia" />
+			<entity schema="gemma.gemma" name="tab_log" />
+			<entity schema="gemma.gemma" name="tab_archivo" />
+			<entity schema="gemma.gemma" name="det_carga_archivo" />
+			<entity schema="gemma.gemma" name="cab_carga_archivo" />
+			<entity schema="gemma.gemma" name="tab_miembro_mesa_escrutinio_seguimiento" />
+			<entity schema="gemma.gemma" name="tab_miembro_mesa_escrutinio" />
+		</group>
+		<group name="mae_ubigeo" color="F7F2EC" >
+			<entity schema="gemma.gemma" name="mae_ubigeo" />
+			<entity schema="gemma.gemma" name="tab_proceso_electoral" />
+			<entity schema="gemma.gemma" name="tab_ubigeo_proceso_electoral" />
+			<entity schema="gemma.gemma" name="tab_medio_pago_miembro_mesa" />
+		</group>
+	</layout>
+	<layout name="~Diagram with Sample Tools" id="f5aa8c25-6204-4eb8-a0a4-44912a20f8e2" show_column_type="y" show_relation="columns" >
+		<entity schema="gemma.gemma" name="cab_carga_archivo" color="C7F4BE" x="912" y="418" />
+		<entity schema="gemma.gemma" name="det_carga_archivo" color="C7F4BE" x="1596" y="1672" />
+		<entity schema="gemma.gemma" name="det_catalogo_estructura" color="C7F4BE" x="1672" y="741" />
+		<entity schema="gemma.gemma" name="det_catalogo_referencia" color="C7F4BE" x="1672" y="1216" />
+		<entity schema="gemma.gemma" name="det_formato_plantilla" color="C7F4BE" x="1292" y="741" />
+		<entity schema="gemma.gemma" name="mae_ubigeo" color="F4DDBE" x="57" y="779" />
+		<entity schema="gemma.gemma" name="tab_archivo" color="C7F4BE" x="912" y="1216" />
+		<entity schema="gemma.gemma" name="tab_log" color="C7F4BE" x="1292" y="1216" />
+		<entity schema="gemma.gemma" name="tab_medio_pago_miembro_mesa" color="F4DDBE" x="437" y="1140" />
+		<entity schema="gemma.gemma" name="tab_miembro_mesa_escrutinio" color="C7F4BE" x="1292" y="57" />
+		<entity schema="gemma.gemma" name="tab_miembro_mesa_escrutinio_seguimiento" color="C7F4BE" x="855" y="893" />
+		<entity schema="gemma.gemma" name="tab_proceso_electoral" color="F4DDBE" x="57" y="1140" />
+		<entity schema="gemma.gemma" name="tab_ubigeo_proceso_electoral" color="F4DDBE" x="437" y="779" />
+		<entity schema="gemma.gemma" name="usuarios" color="BED3F4" x="114" y="57" />
+		<entity schema="gemma.gemma" name="v_n_cantidad_detalle" color="BED3F4" x="418" y="57" />
+		<entity schema="gemma.gemma" name="v_n_cantidad_registros" color="BED3F4" x="114" y="323" />
+		<entity schema="gemma.gemma" name="vw_miembros_mesa_pago" color="BED3F4" x="418" y="323" />
+		<script name="SQL Editor" id="76ceac69-7f28-4c65-bc96-edffd1279abb" language="SQL" >
+			<string><![CDATA[SELECT
+	n_miembro_mesa_escrutinio_pk, n_proceso_electoral, c_mesa, n_tipo_documento, c_documento_identidad, c_apellido_paterno, 
+	c_apellido_materno, c_nombres, n_cargo, n_ubigeo, n_fase, n_envio_01, n_recepcionado_01, n_envio_02, n_recepcionado_02, n_archivo_envio_01, 
+	n_archivo_recepcionado_01, n_archivo_envio_02, n_archivo_recepcionado_02, n_estado_pago, n_activo, c_aud_usuario_creacion, 
+	d_aud_fecha_creacion, c_aud_usuario_modificacion, d_aud_fecha_modificacion, d_fecha_pago, n_estado_pago_programado
+FROM
+	gemma.tab_miembro_mesa_escrutinio o;]]></string>
+		</script>
+		<browser id="a8cf414a-2f64-4635-8ecd-8c1940b2f13f" name="Relational Data Editor" confirm_updates="y" >
+			<browse_table schema="gemma.gemma" entity="tab_miembro_mesa_escrutinio" fk_out="n" x="20" y="20" width="270" height="-60" >
+				<browse_table schema="gemma.gemma" entity="tab_proceso_electoral" fk="cst_tab_miembro_mesa_escrutinio_fk_01" fk_out="n" x="310" y="20" width="500" height="350" record_view="y" >
+					<browse_table schema="gemma.gemma" entity="tab_medio_pago_miembro_mesa" fk="cst_tab_medio_pago_miembro_mesa_fk_01" fk_out="y" x="830" y="20" width="500" height="350" />
+				</browse_table>
+			</browse_table>
+		</browser>
+		<query id="dd7fba2b-c649-44ab-acf8-ec3d53db66fb" name="Query Builder" >
+			<query_table schema="gemma.gemma" name="tab_miembro_mesa_escrutinio" alias="tmme" x="57" y="57" >
+				<column name="n_miembro_mesa_escrutinio_pk" />
+				<column name="n_proceso_electoral" />
+				<column name="c_mesa" />
+				<column name="n_tipo_documento" />
+				<column name="c_documento_identidad" />
+				<column name="c_apellido_paterno" />
+				<column name="c_apellido_materno" />
+				<column name="c_nombres" />
+				<column name="n_cargo" />
+				<column name="n_ubigeo" />
+				<column name="n_fase" />
+				<column name="n_envio_01" />
+				<column name="n_recepcionado_01" />
+				<column name="n_envio_02" />
+				<column name="n_recepcionado_02" />
+				<column name="n_archivo_envio_01" />
+				<column name="n_archivo_recepcionado_01" />
+				<column name="n_archivo_envio_02" />
+				<column name="n_archivo_recepcionado_02" />
+				<column name="n_estado_pago" />
+				<column name="n_activo" />
+				<column name="c_aud_usuario_creacion" />
+				<column name="d_aud_fecha_creacion" />
+				<column name="c_aud_usuario_modificacion" />
+				<column name="d_aud_fecha_modificacion" />
+				<column name="d_fecha_pago" />
+				<column name="n_estado_pago_programado" />
+				<query_table schema="gemma.gemma" name="tab_proceso_electoral" alias="tpe" x="380" y="57" fk="cst_tab_miembro_mesa_escrutinio_fk_01" type="Inner Join" >
+					<column name="n_proceso_electoral_pk" />
+					<column name="c_nombre" />
+					<column name="c_acronimo" />
+					<column name="b_logo" />
+					<column name="c_nombre_logo" />
+					<column name="d_fecha_convocatoria" />
+					<column name="n_vigente" />
+					<column name="n_activo" />
+					<column name="c_aud_usuario_creacion" />
+					<column name="d_aud_fecha_creacion" />
+					<column name="c_aud_usuario_modificacion" />
+					<column name="d_aud_fecha_modificacion" />
+					<column name="c_numero_desembolso" />
+					<column name="n_cantidad_pagado" />
+					<column name="n_cantidad_no_pagado" />
+					<query_table schema="gemma.gemma" name="tab_medio_pago_miembro_mesa" alias="tmpmm" x="684" y="57" fk="cst_tab_medio_pago_miembro_mesa_fk_01" type="Inner Join" >
+						<column name="n_medio_pago_miembro_mesa_pk" />
+						<column name="n_proceso_electoral" />
+						<column name="n_miembro_mesa_escrutinio" />
+						<column name="c_documento_identidad" />
+						<column name="n_entidad_bancaria" />
+						<column name="n_modalidad_pago" />
+						<column name="c_numero_cuenta" />
+						<column name="n_billetera_digital" />
+						<column name="n_numero_vinculado" />
+						<column name="n_vigente" />
+						<column name="n_activo" />
+						<column name="c_aud_usuario_creacion" />
+						<column name="d_aud_fecha_creacion" />
+						<column name="c_aud_usuario_modificacion" />
+						<column name="d_aud_fecha_modificacion" />
+					</query_table>
+				</query_table>
+			</query_table>
+		</query>
+	</layout>
+</project>
