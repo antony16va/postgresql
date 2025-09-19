@@ -38,48 +38,7 @@
 				<fk_column name="n_archivo" pk="n_archivo_pk" />
 			</fk>
 		</table>
-		<table name="det_carga_archivo" row_count="0" spec="" >
-			<comment><![CDATA[Tabla detalle que almacena información del detalle de la carga de archivos.]]></comment>
-			<column name="n_det_carga_archivo_pk" type="integer" length="32" mandatory="y" >
-				<defo><![CDATA[nextval('sq_det_carga_archivo_pk'::regclass)]]></defo>
-				<comment><![CDATA[Identificador único del detalle de carga del archivo (clave primaria).]]></comment>
-			</column>
-			<column name="n_carga_archivo" type="smallint" length="16" mandatory="y" >
-				<comment><![CDATA[Identificador de la columna carga del archivo que referencia a la tabla "cab_carga_archivo" (clave foránea).]]></comment>
-			</column>
-			<column name="n_fila" type="smallint" length="16" mandatory="y" >
-				<comment><![CDATA[Número de fila del archivo correspondiente al dato cargado.]]></comment>
-			</column>
-			<column name="c_clave" type="varchar" length="150" mandatory="y" >
-				<comment><![CDATA[Nombre de la columna o campo leído del archivo.]]></comment>
-			</column>
-			<column name="c_valor" type="varchar" length="250" >
-				<comment><![CDATA[Valor correspondiente a la clave en la fila del archivo.]]></comment>
-			</column>
-			<column name="n_activo" type="smallint" length="16" mandatory="y" >
-				<defo><![CDATA[1]]></defo>
-				<comment><![CDATA[Indicador de actividad del registro (0: inactivo, 1: activo). Valor asignado por defecto 1.]]></comment>
-			</column>
-			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
-				<comment><![CDATA[Usuario que realizó la creación del registro del detalle de la carga del archivo.]]></comment>
-			</column>
-			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
-				<defo><![CDATA[CURRENT_DATE]]></defo>
-				<comment><![CDATA[Fecha y hora de creación del registro del detalle de la carga del archivo.]]></comment>
-			</column>
-			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
-				<comment><![CDATA[Usuario que realizó la última modificación del registro del detalle de la carga del archivo.]]></comment>
-			</column>
-			<column name="d_aud_fecha_modificacion" type="timestamp" >
-				<comment><![CDATA[Fecha y hora de la última modificación del registro del detalle de la carga del archivo.]]></comment>
-			</column>
-			<index name="cst_det_carga_archivo_pk" unique="PRIMARY_KEY" >
-				<column name="n_det_carga_archivo_pk" />
-			</index>
-			<fk name="cst_det_carga_archivo_fk_01" to_schema="gemma.gemma" to_table="cab_carga_archivo" options="" >
-				<fk_column name="n_carga_archivo" pk="n_carga_archivo_pk" />
-			</fk>
-		</table>
+		<table name="det_carga_archivo" row_count="0" spec="" />
 		<table name="det_catalogo_estructura" row_count="30" spec="" >
 			<comment><![CDATA[Tabla detalle que almacena información de los elementos del catálogo, asociados a su estructura correspondiente.]]></comment>
 			<column name="n_det_catalogo_estructura_pk" type="integer" length="32" mandatory="y" >
@@ -308,58 +267,7 @@
 				<column name="n_archivo_pk" />
 			</index>
 		</table>
-		<table name="tab_log" row_count="0" spec="" >
-			<comment><![CDATA[Tabla que almacena información de las capturas de las excepciones en base de datos.]]></comment>
-			<column name="n_log_pk" type="integer" length="32" mandatory="y" >
-				<defo><![CDATA[nextval('sq_tab_log_pk'::regclass)]]></defo>
-				<comment><![CDATA[Identificador único del log (clave primaria).]]></comment>
-			</column>
-			<column name="c_objeto" type="text" >
-				<comment><![CDATA[Nombre del objeto en el que se produjo la excepción.]]></comment>
-			</column>
-			<column name="d_fecha_error" type="timestamp" mandatory="y" >
-				<comment><![CDATA[Fecha y hora en que se generó el error.]]></comment>
-			</column>
-			<column name="c_sql_error" type="text" >
-				<comment><![CDATA[Tipo o categoría del error capturado.]]></comment>
-			</column>
-			<column name="c_sql_text" type="text" >
-				<comment><![CDATA[Texto SQL que generó la excepción.]]></comment>
-			</column>
-			<column name="c_sql_context" type="text" >
-				<comment><![CDATA[Contexto en el que se produjo la excepción.]]></comment>
-			</column>
-			<column name="c_sql_detail" type="text" >
-				<comment><![CDATA[Mensaje detallado del error capturado.]]></comment>
-			</column>
-			<column name="c_linea" type="varchar" length="1000" >
-				<comment><![CDATA[Línea del código en la que ocurrió el error.]]></comment>
-			</column>
-			<column name="c_usuario" type="varchar" length="50" >
-				<comment><![CDATA[Usuario que registró el log.]]></comment>
-			</column>
-			<column name="c_mensaje" type="varchar" length="500" >
-				<comment><![CDATA[Mensaje principal del error registrado.]]></comment>
-			</column>
-			<column name="n_opcion" type="smallint" length="16" >
-				<comment><![CDATA[Identificador de la opción asociada al log.]]></comment>
-			</column>
-			<column name="n_modulo" type="smallint" length="16" >
-				<comment><![CDATA[Identificador del módulo donde ocurrió el error.]]></comment>
-			</column>
-			<column name="c_log" type="text" >
-				<comment><![CDATA[Descripción general del log registrado.]]></comment>
-			</column>
-			<column name="c_observacion" type="text" >
-				<comment><![CDATA[Observación adicional relacionada al log.]]></comment>
-			</column>
-			<column name="d_fecha_log" type="date" length="0" >
-				<comment><![CDATA[Fecha en que se registró el log.]]></comment>
-			</column>
-			<index name="cst_tab_log_pk" unique="PRIMARY_KEY" >
-				<column name="n_log_pk" />
-			</index>
-		</table>
+		<table name="tab_log" row_count="0" spec="" />
 		<table name="tab_medio_pago_miembro_mesa" row_count="2260" spec="" >
 			<comment><![CDATA[Tabla que almacena información sobre los medios de pagos de los miembros de mesa.]]></comment>
 			<column name="n_medio_pago_miembro_mesa_pk" type="integer" length="32" mandatory="y" >
@@ -2120,6 +2028,9 @@ $function$
 			<entity schema="gemma.gemma" name="tab_ubigeo_proceso_electoral" />
 			<entity schema="gemma.gemma" name="tab_medio_pago_miembro_mesa" />
 		</group>
+		<script name="SQL_Editor" id="01071cbe-1849-4d78-b850-40638c0e324d" language="SQL" >
+			<string><![CDATA[drop table det_carga_archivo;]]></string>
+		</script>
 	</layout>
 	<layout name="~Diagram with Sample Tools" id="f5aa8c25-6204-4eb8-a0a4-44912a20f8e2" show_column_type="y" show_relation="columns" >
 		<entity schema="gemma.gemma" name="cab_carga_archivo" color="C7F4BE" x="912" y="418" />
