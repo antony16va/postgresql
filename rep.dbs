@@ -1,0 +1,1667 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="PostgreSQL" database="PostgreSQL" id="162ecb15-ba0d-468c-926d-98605b79438b" >
+	<schema name="public" catalogname="rep" >
+		<comment><![CDATA[standard public schema]]></comment>
+	</schema>
+	<schema name="rep" catalogname="rep" >
+		<comment><![CDATA[Esquema del registro de elecciones primarias - REP]]></comment>
+		<table name="cab_candidato_lista" row_count="0" spec="" >
+			<column name="n_candidato_lista_pk" type="bigint" length="64" mandatory="y" >
+				<defo><![CDATA[nextval('seq_cab_candidato_lista_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del registro de la lista de candidatos.]]></comment>
+			</column>
+			<column name="n_modalidad_candidato" type="integer" length="32" >
+				<comment><![CDATA[Identificador de la modalidad de candidato.]]></comment>
+			</column>
+			<column name="n_numero_lista" type="integer" length="32" >
+				<comment><![CDATA[Número de orden de la lista de candidatos.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<index name="cst_cab_candidato_lista_pk" unique="PRIMARY_KEY" >
+				<column name="n_candidato_lista_pk" />
+			</index>
+			<fk name="cst_cab_candidato_lista_fk_01" to_schema="rep.rep" to_table="tab_modalidad_candidato" options="" >
+				<fk_column name="n_modalidad_candidato" pk="n_modalidad_candidato_pk" />
+			</fk>
+		</table>
+		<table name="cab_catalogo" row_count="0" spec="" >
+			<column name="n_catalogo_pk" type="bigint" length="64" mandatory="y" >
+				<defo><![CDATA[nextval('seq_cab_catalogo_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del catálogo.]]></comment>
+			</column>
+			<column name="n_catalogo_padre" type="bigint" length="64" >
+				<comment><![CDATA[Identificador del catálogo padre.]]></comment>
+			</column>
+			<column name="c_maestro" type="varchar" length="100" mandatory="y" >
+				<comment><![CDATA[Maestro al que se hace referencia como tabla virtual.]]></comment>
+			</column>
+			<column name="n_activo" type="decimal" length="1" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<index name="cst_cab_catalogo_pk" unique="PRIMARY_KEY" >
+				<column name="n_catalogo_pk" />
+			</index>
+		</table>
+		<table name="cab_modalidad_eleccion" row_count="0" spec="" >
+			<column name="n_modalidad_eleccion_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_cab_modalidad_eleccion_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del registro  de modalidad de elección.]]></comment>
+			</column>
+			<column name="n_organizacion_politica" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la organización política.]]></comment>
+			</column>
+			<column name="n_tipo_modalidad_eleccion" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Código del tipo de modalidad de elección.]]></comment>
+			</column>
+			<column name="n_representacion" type="integer" length="32" >
+				<comment><![CDATA[Código de la representacion para delegados.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<column name="n_conformidad_registro" type="integer" length="32" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Código de la conformidad del registro.]]></comment>
+			</column>
+			<index name="cst_cab_reg_modalidad_eleccion_pk" unique="PRIMARY_KEY" >
+				<column name="n_modalidad_eleccion_pk" />
+			</index>
+			<fk name="cst_cab_reg_mod_elec_fk_01" to_schema="rep.rep" to_table="tab_organizacion_politica" options="" >
+				<fk_column name="n_organizacion_politica" pk="n_organizacion_politica_pk" />
+			</fk>
+		</table>
+		<table name="det_candidato_lista" row_count="0" spec="" >
+			<column name="n_det_candidato_lista_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_det_candidato_lista_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único de la tabla detalle de lista de candidatos.]]></comment>
+			</column>
+			<column name="n_candidato_lista" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la lista de candidatos.]]></comment>
+			</column>
+			<column name="n_orden" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Número de orden del candidato en la lista.]]></comment>
+			</column>
+			<column name="c_documento_identidad" type="varchar" length="20" >
+				<comment><![CDATA[Número de documento de identidad del candidato.]]></comment>
+			</column>
+			<column name="c_nombres" type="varchar" length="150" mandatory="y" >
+				<comment><![CDATA[Nombres del candidato.]]></comment>
+			</column>
+			<column name="c_apellido_paterno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido paterno del candidato.]]></comment>
+			</column>
+			<column name="c_apellido_materno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido materno del candidato.]]></comment>
+			</column>
+			<column name="n_tipo_rol" type="integer" length="32" >
+				<comment><![CDATA[Código del tipo de rol del candidato.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<column name="n_cargo_candidato" type="integer" length="32" >
+				<comment><![CDATA[Código del cargo del candidato.]]></comment>
+			</column>
+			<index name="cst_det_candidato_lista_pk" unique="PRIMARY_KEY" >
+				<column name="n_det_candidato_lista_pk" />
+			</index>
+			<fk name="cst_det_candidato_lista_fk_01" to_schema="rep.rep" to_table="cab_candidato_lista" options="" >
+				<fk_column name="n_candidato_lista" pk="n_candidato_lista_pk" />
+			</fk>
+		</table>
+		<table name="det_catalogo_estructura" row_count="0" spec="" >
+			<column name="n_det_catalogo_estructura_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_det_catalogo_estructura_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único de la tabla detalle de estructura del catálogo.]]></comment>
+			</column>
+			<column name="n_catalogo" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador del catálogo.]]></comment>
+			</column>
+			<column name="c_columna" type="varchar" length="60" mandatory="y" >
+				<comment><![CDATA[Columna a la que hace referencia.]]></comment>
+			</column>
+			<column name="c_nombre" type="varchar" length="1000" mandatory="y" >
+				<comment><![CDATA[Nombre del elemento del catálogo.]]></comment>
+			</column>
+			<column name="n_codigo" type="smallint" length="16" >
+				<comment><![CDATA[Código numérico del elemento del catálogo.]]></comment>
+			</column>
+			<column name="c_codigo" type="varchar" length="20" >
+				<comment><![CDATA[Código alfanumérico del elemento del catálogo.]]></comment>
+			</column>
+			<column name="n_orden" type="smallint" length="16" >
+				<comment><![CDATA[Número de orden del elemento del catálogo.]]></comment>
+			</column>
+			<column name="c_tipo" type="varchar" length="250" >
+				<comment><![CDATA[Tipo de elemento del catálogo.]]></comment>
+			</column>
+			<column name="c_informacion_adicional" type="varchar" length="1000" >
+				<comment><![CDATA[Información adicional del elemento del catálogo.]]></comment>
+			</column>
+			<column name="n_obligatorio" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Indicador de obligatoriedad del elemento.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<index name="cst_det_catalogo_estructura_pk" unique="PRIMARY_KEY" >
+				<column name="n_det_catalogo_estructura_pk" />
+			</index>
+			<fk name="cst_det_cat_estructura_fk_01" to_schema="rep.rep" to_table="cab_catalogo" options="" >
+				<fk_column name="n_catalogo" pk="n_catalogo_pk" />
+			</fk>
+		</table>
+		<table name="det_catalogo_referencia" row_count="25" spec="" >
+			<column name="n_det_catalogo_referencia_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_det_catalogo_referencia_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único de la tabla detalle de referencia del catálogo.]]></comment>
+			</column>
+			<column name="n_catalogo" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador del catálogo.]]></comment>
+			</column>
+			<column name="c_tabla_referencia" type="varchar" length="100" mandatory="y" >
+				<comment><![CDATA[Tabla a la que hace referencia el catálogo.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<index name="cst_det_catalogo_referencia_pk" unique="PRIMARY_KEY" >
+				<column name="n_det_catalogo_referencia_pk" />
+			</index>
+			<fk name="cst_det_cat_referencia_fk_01" to_schema="rep.rep" to_table="cab_catalogo" options="" >
+				<fk_column name="n_catalogo" pk="n_catalogo_pk" />
+			</fk>
+		</table>
+		<table name="det_modalidad_eleccion" row_count="0" spec="" >
+			<column name="n_det_modalidad_eleccion_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_det_modalidad_eleccion_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único de la tabla detalle de modalidad de elección.]]></comment>
+			</column>
+			<column name="n_modalidad_eleccion" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la modalidad de elección.]]></comment>
+			</column>
+			<column name="n_distrito_electoral" type="integer" length="32" >
+				<comment><![CDATA[Identificador del distrito electoral.]]></comment>
+			</column>
+			<column name="n_cantidad_delegados" type="integer" length="32" >
+				<comment><![CDATA[Cantidad de delegados.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<column name="c_observacion" type="varchar" length="500" >
+				<comment><![CDATA[Observaciones del registro.]]></comment>
+			</column>
+			<column name="c_lugar_votacion" type="varchar" length="50" />
+			<index name="cst_det_reg_modalidad_eleccion_pk" unique="PRIMARY_KEY" >
+				<column name="n_det_modalidad_eleccion_pk" />
+			</index>
+			<fk name="cst_det_reg_mod_elec_fk_01" to_schema="rep.rep" to_table="cab_modalidad_eleccion" options="" >
+				<fk_column name="n_modalidad_eleccion" pk="n_modalidad_eleccion_pk" />
+			</fk>
+		</table>
+		<table name="mae_distrito_electoral" row_count="150" spec="" >
+			<column name="n_distrito_electoral_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_mae_distrito_electoral_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del distrito electoral.]]></comment>
+			</column>
+			<column name="n_distrito_electoral_padre" type="integer" length="32" >
+				<comment><![CDATA[Identificador del distrito electoral padre.]]></comment>
+			</column>
+			<column name="c_nombre" type="varchar" length="250" mandatory="y" >
+				<comment><![CDATA[Nombre del distrito electoral.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<index name="cst_mae_distrito_electoral_pk" unique="PRIMARY_KEY" >
+				<column name="n_distrito_electoral_pk" />
+			</index>
+			<fk name="cst_mae_distrito_elec_fk_01" to_schema="rep.rep" to_table="mae_distrito_electoral" options="" >
+				<fk_column name="n_distrito_electoral_padre" pk="n_distrito_electoral_pk" />
+			</fk>
+		</table>
+		<table name="mae_ubigeo" row_count="337" spec="" >
+			<column name="n_ubigeo_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_mae_ubigeo_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del ubigeo.]]></comment>
+			</column>
+			<column name="n_ubigeo_padre" type="integer" length="32" >
+				<comment><![CDATA[Identificador del ubigeo padre.]]></comment>
+			</column>
+			<column name="n_distrito_electoral" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador del distrito electoral.]]></comment>
+			</column>
+			<column name="c_ubigeo" type="varchar" length="6" mandatory="y" >
+				<comment><![CDATA[Código del ubigeo.]]></comment>
+			</column>
+			<column name="c_nombre" type="varchar" length="250" mandatory="y" >
+				<comment><![CDATA[Nombre del ubigeo.]]></comment>
+			</column>
+			<column name="n_circunscripcion" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Código de la circunscripción.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<index name="cst_mae_ubigeo_pk" unique="PRIMARY_KEY" >
+				<column name="n_ubigeo_pk" />
+			</index>
+			<fk name="cst_mae_ubigeo_fk_02" to_schema="rep.rep" to_table="mae_ubigeo" options="" >
+				<fk_column name="n_ubigeo_padre" pk="n_ubigeo_pk" />
+			</fk>
+			<fk name="cst_mae_ubigeo_fk_01" to_schema="rep.rep" to_table="mae_distrito_electoral" options="" >
+				<fk_column name="n_distrito_electoral" pk="n_distrito_electoral_pk" />
+			</fk>
+		</table>
+		<table name="tab_archivo" row_count="100" spec="" >
+			<column name="n_archivo_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_archivo_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del archivo.]]></comment>
+			</column>
+			<column name="c_guid_archivo" type="varchar" length="500" >
+				<comment><![CDATA[Identificador generado del archivo.]]></comment>
+			</column>
+			<column name="c_ruta_archivo" type="varchar" length="1000" >
+				<comment><![CDATA[Ruta del archivo en el servidor.]]></comment>
+			</column>
+			<column name="c_nombre_original_archivo" type="varchar" length="1000" >
+				<comment><![CDATA[Nombre original del archivo.]]></comment>
+			</column>
+			<column name="c_nombre_archivo" type="varchar" length="1000" mandatory="y" >
+				<comment><![CDATA[Nombre descriptivo del archivo.]]></comment>
+			</column>
+			<column name="c_formato_archivo" type="varchar" length="20" >
+				<comment><![CDATA[Formato del archivo cargado.]]></comment>
+			</column>
+			<column name="c_peso_archivo" type="varchar" length="50" >
+				<comment><![CDATA[Peso del archivo cargado.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<index name="cst_tab_archivo_pk" unique="PRIMARY_KEY" >
+				<column name="n_archivo_pk" />
+			</index>
+		</table>
+		<table name="tab_archivo_organizacion_politica" row_count="0" spec="" >
+			<column name="n_archivo_organizacion_politica_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_archivo_organizacion_politica_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del registro de archivo de organización política.]]></comment>
+			</column>
+			<column name="n_organizacion_politica" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la organización política.]]></comment>
+			</column>
+			<column name="n_archivo" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador del archivo asociado.]]></comment>
+			</column>
+			<column name="n_tipo_documento" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Código del tipo de documento.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<index name="cst_tab_archivo_organizacion_politica_pk" unique="PRIMARY_KEY" >
+				<column name="n_archivo_organizacion_politica_pk" />
+			</index>
+			<fk name="cst_tab_archivo_organizacion_politica_fk_02" to_schema="rep.rep" to_table="tab_organizacion_politica" options="" >
+				<fk_column name="n_organizacion_politica" pk="n_organizacion_politica_pk" />
+			</fk>
+			<fk name="cst_tab_archivo_organizacion_politica_fk_01" to_schema="rep.rep" to_table="tab_archivo" options="" >
+				<fk_column name="n_archivo" pk="n_archivo_pk" />
+			</fk>
+		</table>
+		<table name="tab_auditoria" row_count="100" spec="" >
+			<column name="c_entidad" type="varchar" length="30" mandatory="y" >
+				<comment><![CDATA[Entidad a la que hace referencia la auditoría.]]></comment>
+			</column>
+			<column name="n_identificador" type="integer" length="32" >
+				<comment><![CDATA[Identificador de la entidad auditada.]]></comment>
+			</column>
+			<column name="c_accion" type="varchar" length="200" >
+				<comment><![CDATA[Acción realizada en la auditoría.]]></comment>
+			</column>
+			<column name="d_fecha_auditoria" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la acción auditada.]]></comment>
+			</column>
+			<column name="c_usuario" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la acción.]]></comment>
+			</column>
+			<column name="c_dato_anterior" type="varchar" length="4000" >
+				<comment><![CDATA[Dato previo a la auditoría.]]></comment>
+			</column>
+			<column name="c_dato_nuevo" type="varchar" length="4000" >
+				<comment><![CDATA[Dato posterior a la auditoría.]]></comment>
+			</column>
+			<column name="n_auditoria_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_auditoria_pk'::regclass)]]></defo>
+			</column>
+			<index name="cst_tab_auditoria_pk" unique="PRIMARY_KEY" >
+				<column name="n_auditoria_pk" />
+			</index>
+		</table>
+		<table name="tab_candidato_nominal" row_count="0" spec="" >
+			<column name="n_candidato_nominal_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_candidato_nominal_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del candidato nominal.]]></comment>
+			</column>
+			<column name="n_modalidad_candidato" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la modalidad de candidato.]]></comment>
+			</column>
+			<column name="n_orden" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Número de orden del candidato nominal.]]></comment>
+			</column>
+			<column name="c_documento_identidad" type="varchar" length="20" >
+				<comment><![CDATA[Número de documento de identidad del candidato.]]></comment>
+			</column>
+			<column name="c_nombres" type="varchar" length="150" mandatory="y" >
+				<comment><![CDATA[Nombres del candidato nominal.]]></comment>
+			</column>
+			<column name="c_apellido_paterno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido paterno del candidato nominal.]]></comment>
+			</column>
+			<column name="c_apellido_materno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido materno del candidato nominal.]]></comment>
+			</column>
+			<column name="n_activo" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="n_cargo_candidato" type="integer" length="32" >
+				<comment><![CDATA[Código del cargo del candidato nominal.]]></comment>
+			</column>
+			<column name="n_tipo_rol" type="integer" length="32" >
+				<comment><![CDATA[Código del tipo de rol del candidato nominal.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<index name="cst_tab_candidato_nominal_pk" unique="PRIMARY_KEY" >
+				<column name="n_candidato_nominal_pk" />
+			</index>
+			<fk name="cst_tab_candidato_nominal_fk_01" to_schema="rep.rep" to_table="tab_modalidad_candidato" options="" >
+				<fk_column name="n_modalidad_candidato" pk="n_modalidad_candidato_pk" />
+			</fk>
+		</table>
+		<table name="tab_delegado_ganador" row_count="0" spec="" >
+			<column name="n_delegado_ganador_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_delegado_ganador_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del delegado ganador.]]></comment>
+			</column>
+			<column name="n_organizacion_politica" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la organización política.]]></comment>
+			</column>
+			<column name="n_distrito_electoral" type="integer" length="32" >
+				<comment><![CDATA[Identificador del ubigeo.]]></comment>
+			</column>
+			<column name="c_documento_identidad" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Número de documento de identidad del delegado.]]></comment>
+			</column>
+			<column name="c_nombres" type="varchar" length="150" >
+				<comment><![CDATA[Nombres del delegado ganador.]]></comment>
+			</column>
+			<column name="c_apellido_paterno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido paterno del delegado ganador.]]></comment>
+			</column>
+			<column name="c_apellido_materno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido materno del delegado ganador.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<index name="cst_tab_delegado_ganador_pk" unique="PRIMARY_KEY" >
+				<column name="n_delegado_ganador_pk" />
+			</index>
+			<fk name="cst_tab_delegado_ganador_fk_01" to_schema="rep.rep" to_table="tab_organizacion_politica" options="" >
+				<fk_column name="n_organizacion_politica" pk="n_organizacion_politica_pk" />
+			</fk>
+		</table>
+		<table name="tab_fecha_fase" row_count="100" spec="" >
+			<column name="n_fecha_fase_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_fecha_fase_pk'::regclass)]]></defo>
+			</column>
+			<column name="c_fase_nombre" type="varchar" length="300" mandatory="y" />
+			<column name="d_fecha_inicio" type="timestamp" mandatory="y" />
+			<column name="d_fecha_fin" type="timestamp" mandatory="y" />
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" />
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" />
+			<column name="d_aud_fecha_modificacion" type="timestamp" />
+			<column name="n_codigo" type="smallint" length="16" mandatory="y" />
+			<index name="cst_tab_fecha_fase_pk" unique="PRIMARY_KEY" >
+				<column name="n_fecha_fase_pk" />
+			</index>
+		</table>
+		<table name="tab_log" row_count="100" spec="" >
+			<column name="c_procedure" type="varchar" length="100" >
+				<comment><![CDATA[Nombre del procedimiento almacenado que generó el error.]]></comment>
+			</column>
+			<column name="d_error_date" type="timestamp" >
+				<comment><![CDATA[Fecha y hora en que se generó el error.]]></comment>
+			</column>
+			<column name="c_sql_error" type="varchar" length="20" >
+				<comment><![CDATA[Tipo de error SQL.]]></comment>
+			</column>
+			<column name="c_sql_text" type="varchar" length="200" >
+				<comment><![CDATA[Texto del error SQL.]]></comment>
+			</column>
+			<column name="c_line" type="varchar" length="10" >
+				<comment><![CDATA[Número de línea del error.]]></comment>
+			</column>
+			<column name="c_user" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la transacción.]]></comment>
+			</column>
+			<column name="c_mensaje" type="varchar" length="200" >
+				<comment><![CDATA[Mensaje de error.]]></comment>
+			</column>
+			<column name="n_log_pk" type="integer" length="32" mandatory="y" />
+			<index name="cst_tab_log_pk" unique="PRIMARY_KEY" >
+				<column name="n_log_pk" />
+			</index>
+		</table>
+		<table name="tab_mesa" row_count="0" spec="" >
+			<column name="n_mesa_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_mesa_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único de la mesa electoral.]]></comment>
+			</column>
+			<column name="n_ubigeo" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador del ubigeo.]]></comment>
+			</column>
+			<column name="n_organizacion_politica" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la organización política.]]></comment>
+			</column>
+			<column name="c_mesa_asignada" type="varchar" length="10" mandatory="y" >
+				<comment><![CDATA[Número de la mesa asignada.]]></comment>
+			</column>
+			<column name="n_activo" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<column name="n_estado_mesa" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Código del estado de la mesa.]]></comment>
+			</column>
+			<column name="n_asignacion_cargo" type="integer" length="32" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Código del cargo asignado a la mesa.]]></comment>
+			</column>
+			<index name="cst_tab_mesa_pk" unique="PRIMARY_KEY" >
+				<column name="n_mesa_pk" />
+			</index>
+			<fk name="cst_tab_mesa_fk_02" to_schema="rep.rep" to_table="mae_ubigeo" options="" >
+				<fk_column name="n_ubigeo" pk="n_ubigeo_pk" />
+			</fk>
+			<fk name="cst_tab_mesa_fk_01" to_schema="rep.rep" to_table="tab_organizacion_politica" options="" >
+				<fk_column name="n_organizacion_politica" pk="n_organizacion_politica_pk" />
+			</fk>
+		</table>
+		<table name="tab_mesa_delegado" row_count="0" spec="" >
+			<column name="n_mesa_delegado_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_mesa_delegado_pk'::regclass)]]></defo>
+			</column>
+			<column name="n_distrito_electoral" type="integer" length="32" />
+			<column name="n_organizacion_politica" type="integer" length="32" mandatory="y" />
+			<column name="c_mesa_asignada" type="varchar" length="10" />
+			<column name="n_activo" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" />
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" />
+			<column name="d_aud_fecha_modificacion" type="timestamp" />
+			<column name="n_asignacion_cargo" type="integer" length="32" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<index name="cst_tab_mesa_delegado_pk" unique="PRIMARY_KEY" >
+				<column name="n_mesa_delegado_pk" />
+			</index>
+			<fk name="cst_tab_mesa_delegado_fk_02" to_schema="rep.rep" to_table="mae_distrito_electoral" options="" >
+				<fk_column name="n_distrito_electoral" pk="n_distrito_electoral_pk" />
+			</fk>
+			<fk name="cst_tab_mesa_delegado_fk_01" to_schema="rep.rep" to_table="tab_organizacion_politica" options="" >
+				<fk_column name="n_organizacion_politica" pk="n_organizacion_politica_pk" />
+			</fk>
+		</table>
+		<table name="tab_miembro_mesa" row_count="0" spec="" >
+			<column name="n_miembro_mesa_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_miembro_mesa_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del miembro de mesa.]]></comment>
+			</column>
+			<column name="n_mesa" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la mesa electoral.]]></comment>
+			</column>
+			<column name="c_documento_identidad" type="varchar" length="20" >
+				<comment><![CDATA[Número de documento de identidad del miembro de mesa.]]></comment>
+			</column>
+			<column name="c_nombres" type="varchar" length="150" >
+				<comment><![CDATA[Nombres del miembro de mesa.]]></comment>
+			</column>
+			<column name="c_apellido_paterno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido paterno del miembro de mesa.]]></comment>
+			</column>
+			<column name="c_apellido_materno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido materno del miembro de mesa.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<column name="n_cargo_miembro" type="smallint" length="16" >
+				<comment><![CDATA[Código del cargo del miembro de mesa.]]></comment>
+			</column>
+			<column name="n_es_miembro_mesa" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Indicador de si es miembro de mesa.]]></comment>
+			</column>
+			<column name="c_fecha_nacimiento" type="varchar" length="8" >
+				<comment><![CDATA[Fecha de nacimiento del miembro de mesa.]]></comment>
+			</column>
+			<column name="n_grado_instruccion" type="smallint" length="16" >
+				<comment><![CDATA[Código del grado de instrucción del miembro de mesa.]]></comment>
+			</column>
+			<column name="n_tipo_discapacidad" type="smallint" length="16" >
+				<comment><![CDATA[Código del tipo de discapacidad del miembro de mesa.]]></comment>
+			</column>
+			<index name="cst_tab_miembro_mesa_pk" unique="PRIMARY_KEY" >
+				<column name="n_miembro_mesa_pk" />
+			</index>
+			<fk name="cst_tab_miembro_mesa_fk_01" to_schema="rep.rep" to_table="tab_mesa" options="" >
+				<fk_column name="n_mesa" pk="n_mesa_pk" />
+			</fk>
+		</table>
+		<table name="tab_miembro_mesa_delegado" row_count="0" spec="" >
+			<column name="n_miembro_mesa_delegado_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_miembro_mesa_delegado_pk'::regclass)]]></defo>
+			</column>
+			<column name="n_mesa_delegado" type="integer" length="32" mandatory="y" />
+			<column name="c_documento_identidad" type="varchar" length="20" />
+			<column name="c_nombres" type="varchar" length="150" />
+			<column name="c_apellido_paterno" type="varchar" length="150" />
+			<column name="c_apellido_materno" type="varchar" length="150" />
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" />
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" />
+			<column name="d_aud_fecha_modificacion" type="timestamp" />
+			<column name="n_cargo_miembro" type="smallint" length="16" />
+			<column name="n_es_miembro_mesa" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<index name="cst_tab_miembro_mesa_delegado_pk" unique="PRIMARY_KEY" >
+				<column name="n_miembro_mesa_delegado_pk" />
+			</index>
+			<fk name="cst_tab_miembro_mesa_delegado_fk_01" to_schema="rep.rep" to_table="tab_mesa_delegado" options="" >
+				<fk_column name="n_mesa_delegado" pk="n_mesa_delegado_pk" />
+			</fk>
+		</table>
+		<table name="tab_miembro_organo_electoral_central" row_count="0" spec="" >
+			<column name="n_miembro_organo_electoral_central_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_miembro_organo_electoral_central_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del miembro del órgano electoral central.]]></comment>
+			</column>
+			<column name="n_organizacion_politica" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la organización política.]]></comment>
+			</column>
+			<column name="c_documento_identidad" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Número de documento de identidad del miembro.]]></comment>
+			</column>
+			<column name="c_apellido_paterno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido paterno del miembro del órgano electoral.]]></comment>
+			</column>
+			<column name="c_apellido_materno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido materno del miembro del órgano electoral.]]></comment>
+			</column>
+			<column name="c_nombres" type="varchar" length="150" mandatory="y" >
+				<comment><![CDATA[Nombres del miembro del órgano electoral.]]></comment>
+			</column>
+			<column name="n_cargo" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Código del cargo del miembro del órgano electoral.]]></comment>
+			</column>
+			<column name="n_estado_validacion" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Código del estado de validación del miembro.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<column name="n_validacion_casilla" type="smallint" length="16" />
+			<index name="cst_tab_miembro_electoral_pk" unique="PRIMARY_KEY" >
+				<column name="n_miembro_organo_electoral_central_pk" />
+			</index>
+			<fk name="cst_tab_reg_comite_elec_fk_01" to_schema="rep.rep" to_table="tab_organizacion_politica" options="" >
+				<fk_column name="n_organizacion_politica" pk="n_organizacion_politica_pk" />
+			</fk>
+		</table>
+		<table name="tab_modalidad_candidato" row_count="0" spec="" >
+			<column name="n_modalidad_candidato_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_modalidad_candidato_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único de la modalidad de candidato.]]></comment>
+			</column>
+			<column name="n_organizacion_politica" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la organización política.]]></comment>
+			</column>
+			<column name="n_tipo_ambito" type="integer" length="32" >
+				<comment><![CDATA[Código del tipo de ámbito de la modalidad.]]></comment>
+			</column>
+			<column name="n_tipo_competencia_electoral" type="integer" length="32" >
+				<comment><![CDATA[Código del tipo de competencia electoral.]]></comment>
+			</column>
+			<column name="n_modalidad_eleccion" type="integer" length="32" >
+				<comment><![CDATA[Identificador de la modalidad de elección.]]></comment>
+			</column>
+			<column name="n_distrito_electoral" type="integer" length="32" >
+				<comment><![CDATA[Identificador del distrito electoral.]]></comment>
+			</column>
+			<column name="n_cantidad" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Cantidad de candidatos.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<index name="cst_tab_modalidad_candidato_pk" unique="PRIMARY_KEY" >
+				<column name="n_modalidad_candidato_pk" />
+			</index>
+			<fk name="cst_tab_modalidad_candidato_fk_01" to_schema="rep.rep" to_table="tab_organizacion_politica" options="" >
+				<fk_column name="n_organizacion_politica" pk="n_organizacion_politica_pk" />
+			</fk>
+		</table>
+		<table name="tab_organizacion_politica" row_count="225" spec="" >
+			<column name="n_organizacion_politica_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_organizacion_politica_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único de la organización política.]]></comment>
+			</column>
+			<column name="n_distrito_electoral" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador del distrito electoral.]]></comment>
+			</column>
+			<column name="c_id_organizacion_politica" type="varchar" length="20" >
+				<comment><![CDATA[Identificador de la organización política según el JNE.]]></comment>
+			</column>
+			<column name="n_tipo_organizacion_politica" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Código del tipo de organización política.]]></comment>
+			</column>
+			<column name="c_nombre" type="varchar" length="500" mandatory="y" >
+				<comment><![CDATA[Nombre de la organización política.]]></comment>
+			</column>
+			<column name="n_estado" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Código del estado de la organización política.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<column name="n_participacion" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[2]]></defo>
+				<comment><![CDATA[Identificador de la participación de la organización política.]]></comment>
+			</column>
+			<column name="n_enviar_notificacion" type="integer" length="32" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Indicador de envío de notificaciones.]]></comment>
+			</column>
+			<column name="n_padron_final" type="integer" length="32" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Identificador de padrón final.]]></comment>
+			</column>
+			<index name="cst_tab_oopp_pk" unique="PRIMARY_KEY" >
+				<column name="n_organizacion_politica_pk" />
+			</index>
+			<fk name="cst_tab_oopp_fk_01" to_schema="rep.rep" to_table="mae_distrito_electoral" options="" >
+				<fk_column name="n_distrito_electoral" pk="n_distrito_electoral_pk" />
+			</fk>
+		</table>
+		<table name="tab_padron_registro_organizacion_politica" row_count="100" spec="" >
+			<column name="c_documento_identidad" type="varchar" length="8" >
+				<comment><![CDATA[Número de documento de identidad.]]></comment>
+			</column>
+			<column name="c_apellido_paterno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido paterno del afiliado.]]></comment>
+			</column>
+			<column name="c_apellido_materno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido materno del afiliado.]]></comment>
+			</column>
+			<column name="c_nombre" type="varchar" length="60" >
+				<comment><![CDATA[Nombres del afiliado.]]></comment>
+			</column>
+			<column name="c_id_oopp" type="varchar" length="8" >
+				<comment><![CDATA[Identificador de la organización política.]]></comment>
+			</column>
+			<column name="c_tipo_oopp" type="varchar" length="2" >
+				<comment><![CDATA[Tipo de organización política.]]></comment>
+			</column>
+			<column name="c_nombre_oopp" type="varchar" length="100" >
+				<comment><![CDATA[Nombre de la organización política.]]></comment>
+			</column>
+			<column name="c_fecha_nacimiento" type="varchar" length="8" >
+				<comment><![CDATA[Fecha de nacimiento del afiliado.]]></comment>
+			</column>
+			<column name="n_grado_instruccion" type="smallint" length="16" >
+				<comment><![CDATA[Código del grado de instrucción del afiliado.]]></comment>
+			</column>
+			<column name="n_tipo_discapacidad" type="smallint" length="16" >
+				<comment><![CDATA[Código del tipo de discapacidad del afiliado.]]></comment>
+			</column>
+			<column name="n_padron_registro_organizacion_politica_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_padron_registro_organizacion_politica_pk'::regclass)]]></defo>
+			</column>
+			<index name="cst_tab_padron_registro_organizacion_politica_pk" unique="PRIMARY_KEY" >
+				<column name="n_padron_registro_organizacion_politica_pk" />
+			</index>
+		</table>
+		<table name="tab_personero" row_count="337" spec="" >
+			<column name="n_personero_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_personero_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del personero.]]></comment>
+			</column>
+			<column name="n_organizacion_politica" type="integer" length="32" >
+				<comment><![CDATA[Identificador de la organización política.]]></comment>
+			</column>
+			<column name="c_documento_identidad" type="varchar" length="20" >
+				<comment><![CDATA[Número de documento de identidad del personero.]]></comment>
+			</column>
+			<column name="c_apellido_paterno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido paterno del personero.]]></comment>
+			</column>
+			<column name="c_apellido_materno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido materno del personero.]]></comment>
+			</column>
+			<column name="c_nombres" type="varchar" length="150" mandatory="y" >
+				<comment><![CDATA[Nombres del personero.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<column name="n_distrito_electoral" type="integer" length="32" >
+				<comment><![CDATA[Identificador del distrito electoral.]]></comment>
+			</column>
+			<index name="cst_tab_reg_personero_pk" unique="PRIMARY_KEY" >
+				<column name="n_personero_pk" />
+			</index>
+			<fk name="cst_tab_reg_personero_fk_01" to_schema="rep.rep" to_table="tab_organizacion_politica" options="" >
+				<fk_column name="n_organizacion_politica" pk="n_organizacion_politica_pk" />
+			</fk>
+		</table>
+		<table name="tab_presentacion_candidatura" row_count="337" spec="" >
+			<column name="n_presentacion_candidatura_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_presentacion_candidatura_pk'::regclass)]]></defo>
+			</column>
+			<column name="n_organizacion_politica" type="integer" length="32" mandatory="y" />
+			<column name="n_tipo_competencia_electoral" type="integer" length="32" />
+			<column name="n_modalidad_candidato" type="integer" length="32" />
+			<column name="n_estado_lista" type="integer" length="32" />
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" />
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" />
+			<column name="d_aud_fecha_modificacion" type="timestamp" />
+			<column name="n_conformidad_registro" type="integer" length="32" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<column name="n_voto_preferencial" type="integer" length="32" />
+			<column name="n_tipo_modalidad_eleccion" type="integer" length="32" />
+			<index name="cst_tab_presentacion_candidatura_pk" unique="PRIMARY_KEY" >
+				<column name="n_presentacion_candidatura_pk" />
+			</index>
+			<fk name="cst_tab_presentacion_candidatura_fk_01" to_schema="rep.rep" to_table="tab_organizacion_politica" options="" >
+				<fk_column name="n_organizacion_politica" pk="n_organizacion_politica_pk" />
+			</fk>
+		</table>
+		<table name="tab_representante_organizacion_politica" row_count="337" spec="" >
+			<column name="n_representante_organizacion_politica_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_representante_organizacion_politica_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del representante de la organización política.]]></comment>
+			</column>
+			<column name="n_organizacion_politica" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la organización política.]]></comment>
+			</column>
+			<column name="c_documento_identidad" type="varchar" length="20" >
+				<comment><![CDATA[Número de documento de identidad del representante.]]></comment>
+			</column>
+			<column name="c_apellido_paterno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido paterno del representante.]]></comment>
+			</column>
+			<column name="c_apellido_materno" type="varchar" length="150" >
+				<comment><![CDATA[Apellido materno del representante.]]></comment>
+			</column>
+			<column name="c_nombres" type="varchar" length="150" mandatory="y" >
+				<comment><![CDATA[Nombres del representante.]]></comment>
+			</column>
+			<column name="c_correo_electronico" type="varchar" length="300" >
+				<comment><![CDATA[Correo electrónico del representante.]]></comment>
+			</column>
+			<column name="c_celular" type="varchar" length="20" >
+				<comment><![CDATA[Número de celular del representante.]]></comment>
+			</column>
+			<column name="c_telefono" type="varchar" length="20" >
+				<comment><![CDATA[Número de teléfono del representante.]]></comment>
+			</column>
+			<column name="c_direccion" type="varchar" length="500" >
+				<comment><![CDATA[Dirección del representante.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<column name="c_correo_electronico_confirma" type="varchar" length="300" >
+				<comment><![CDATA[Correo electrónico de confirmación del representante.]]></comment>
+			</column>
+			<index name="cst_tab_reg_datos_generales_pk" unique="PRIMARY_KEY" >
+				<column name="n_representante_organizacion_politica_pk" />
+			</index>
+			<fk name="cst_tab_reg_datos_gen_fk_01" to_schema="rep.rep" to_table="tab_organizacion_politica" options="" >
+				<fk_column name="n_organizacion_politica" pk="n_organizacion_politica_pk" />
+			</fk>
+		</table>
+		<table name="tab_usuario" row_count="0" spec="" >
+			<column name="n_usuario_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_usuario_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del usuario.]]></comment>
+			</column>
+			<column name="c_usuario" type="varchar" length="30" mandatory="y" >
+				<comment><![CDATA[Nombre del usuario.]]></comment>
+			</column>
+			<column name="c_abreviatura_perfil" type="varchar" length="30" mandatory="y" >
+				<comment><![CDATA[Abreviatura del perfil del usuario.]]></comment>
+			</column>
+			<column name="n_estado" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Código del estado del usuario.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<column name="n_notificacion_sisen" type="integer" length="32" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Identificador de notificaciones del sistema.]]></comment>
+			</column>
+			<column name="n_notificacion_usuario" type="integer" length="32" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Identificador de notificaciones del usuario.]]></comment>
+			</column>
+			<column name="n_lectura_usuario" type="integer" length="32" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Indicador de lectura del usuario.]]></comment>
+			</column>
+			<column name="n_usuario_actualizado" type="integer" length="32" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Indicador de usuario actualizado.]]></comment>
+			</column>
+			<column name="n_envio_doc_credencial" type="integer" length="32" >
+				<defo><![CDATA[0]]></defo>
+				<comment><![CDATA[Indicador de envío de documentos de credencial.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<column name="c_apellido_paterno" type="varchar" length="150" />
+			<column name="c_apellido_materno" type="varchar" length="150" />
+			<column name="c_nombres" type="varchar" length="150" />
+			<index name="cst_tab_usuario_pk" unique="PRIMARY_KEY" >
+				<column name="n_usuario_pk" />
+			</index>
+		</table>
+		<table name="tab_usuario_organizacion_politica" row_count="0" spec="" >
+			<column name="n_usuario_organizacion_politica_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_usuario_organizacion_politica_pk'::regclass)]]></defo>
+				<comment><![CDATA[Identificador único del usuario asociado a la organización política.]]></comment>
+			</column>
+			<column name="n_usuario" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador del usuario.]]></comment>
+			</column>
+			<column name="n_organizacion_politica" type="integer" length="32" mandatory="y" >
+				<comment><![CDATA[Identificador de la organización política.]]></comment>
+			</column>
+			<column name="n_estado" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Código del estado del usuario de la organización política.]]></comment>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="20" mandatory="y" >
+				<comment><![CDATA[Usuario que creó el registro.]]></comment>
+			</column>
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+				<comment><![CDATA[Fecha y hora de creación del registro.]]></comment>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="20" >
+				<comment><![CDATA[Usuario que realizó la última modificación.]]></comment>
+			</column>
+			<column name="d_aud_fecha_modificacion" type="timestamp" >
+				<comment><![CDATA[Fecha y hora de la última modificación.]]></comment>
+			</column>
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+				<comment><![CDATA[Indicador de actividad del registro.]]></comment>
+			</column>
+			<index name="cst_tab_usuario_oopp_pk" unique="PRIMARY_KEY" >
+				<column name="n_usuario_organizacion_politica_pk" />
+			</index>
+			<fk name="cst_tab_usuario_oopp_fk_02" to_schema="rep.rep" to_table="tab_usuario" options="" >
+				<fk_column name="n_usuario" pk="n_usuario_pk" />
+			</fk>
+			<fk name="cst_tab_usuario_oopp_fk_01" to_schema="rep.rep" to_table="tab_organizacion_politica" options="" >
+				<fk_column name="n_organizacion_politica" pk="n_organizacion_politica_pk" />
+			</fk>
+		</table>
+		<table name="tab_validacion_inscripcion" row_count="0" spec="" >
+			<column name="n_validacion_inscripcion_pk" type="integer" length="32" mandatory="y" >
+				<defo><![CDATA[nextval('seq_tab_validacion_inscripcion_pk'::regclass)]]></defo>
+			</column>
+			<column name="n_fase" type="integer" length="32" mandatory="y" />
+			<column name="n_tipo_validacion" type="integer" length="32" mandatory="y" />
+			<column name="n_organizacion_politica" type="integer" length="32" mandatory="y" />
+			<column name="n_activo" type="smallint" length="16" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+			</column>
+			<column name="c_aud_usuario_creacion" type="varchar" length="50" mandatory="y" />
+			<column name="d_aud_fecha_creacion" type="timestamp" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+			<column name="c_aud_usuario_modificacion" type="varchar" length="50" />
+			<column name="d_aud_fecha_modificacion" type="timestamp" />
+			<index name="cst_tab_validacion_inscripcion_pk" unique="PRIMARY_KEY" >
+				<column name="n_validacion_inscripcion_pk" />
+			</index>
+		</table>
+		<sequence name="seq_cab_candidato_lista_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_cab_catalogo_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_cab_modalidad_eleccion_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_det_candidato_lista_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_det_catalogo_estructura_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_det_catalogo_referencia_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_det_modalidad_eleccion_pk" options="START WITH 0 INCREMENT BY 1 MINVALUE 0" />
+		<sequence name="seq_mae_distrito_electoral_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_mae_ubigeo_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_archivo_organizacion_politica_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_archivo_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_auditoria_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_candidato_nominal_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_delegado_ganador_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_fecha_fase_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_mesa_delegado_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_mesa_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_miembro_mesa_delegado_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_miembro_mesa_pk" options="START WITH 1 INCREMENT BY 1 MINVALUE 0" />
+		<sequence name="seq_tab_miembro_organo_electoral_central_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_modalidad_candidato_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_organizacion_politica_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_padron_registro_organizacion_politica_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_personero_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_presentacion_candidatura_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_representante_organizacion_politica_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_usuario_organizacion_politica_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_usuario_pk" options="START WITH 1 INCREMENT BY 1 MAXVALUE 999999999999999" />
+		<sequence name="seq_tab_validacion_inscripcion_pk" options="START WITH 0 INCREMENT BY 1 MINVALUE 0" />
+		<procedure name="sp_puesta_cero" id="2edf7284-c486-4810-a94f-c4730fbc462d" isSystem="false" params_known="n" >
+			<string><![CDATA[create function sp_puesta_cero 
+DECLARE
+    v_sql TEXT;
+    v_ids_sagrados BIGINT[];
+    v_max_usuario_pk BIGINT;
+    v_max_usuario_oopp_pk BIGINT;
+BEGIN
+    EXECUTE format($f$
+        SELECT array_agg(n_usuario_pk)
+        FROM %I.tab_usuario
+        WHERE c_abreviatura_perfil IN ('ADMINISTRADOR_REP', 'OPERADOR_REP')
+           OR c_usuario IN ('46752637', '46757576')
+    $f$, p_esquema)
+    INTO v_ids_sagrados;
+    EXECUTE format($f$
+        DELETE FROM %I.tab_usuario_organizacion_politica
+        WHERE n_usuario NOT IN (SELECT unnest($1))
+    $f$, p_esquema)
+    USING v_ids_sagrados;
+    EXECUTE format($f$
+        DELETE FROM %I.tab_usuario
+        WHERE n_usuario_pk NOT IN (SELECT unnest($1))
+    $f$, p_esquema)
+    USING v_ids_sagrados;
+    EXECUTE format('SELECT COALESCE(MAX(n_usuario_pk), 0) FROM %I.tab_usuario', p_esquema)
+    INTO v_max_usuario_pk;
+    EXECUTE format('SELECT COALESCE(MAX(n_usuario_organizacion_politica_pk), 0) FROM %I.tab_usuario_organizacion_politica', p_esquema)
+    INTO v_max_usuario_oopp_pk;
+    EXECUTE format('SELECT setval(%L, %s, true)', p_esquema || '.seq_tab_usuario_pk', v_max_usuario_pk);
+    EXECUTE format('SELECT setval(%L, %s, true)', p_esquema || '.seq_tab_usuario_organizacion_politica_pk', v_max_usuario_oopp_pk);
+    FOR v_sql IN
+        SELECT format('DELETE FROM %I.%I', p_esquema, t) FROM unnest(ARRAY[
+            'tab_candidato_nominal',
+            'det_candidato_lista',
+            'cab_candidato_lista',
+            'tab_modalidad_candidato',
+            'tab_miembro_organo_electoral_central',
+            'tab_miembro_mesa_delegado',
+            'tab_miembro_mesa',
+            'tab_mesa_delegado',
+            'tab_mesa',
+            'tab_delegado_ganador',
+            'tab_archivo_organizacion_politica',
+            'det_modalidad_eleccion',
+            'cab_modalidad_eleccion',
+            'tab_representante_organizacion_politica',
+            'tab_presentacion_candidatura',
+            'tab_personero',
+            'tab_validacion_inscripcion',
+            'tab_padron_registro_organizacion_politica',
+            'tab_auditoria',
+            'tab_archivo'
+        ]) AS t
+    LOOP
+        EXECUTE v_sql;
+    END LOOP;
+    FOR v_sql IN
+        SELECT format('SELECT setval(%L, 1, false)', p_esquema || '.' || s) FROM unnest(ARRAY[
+            'seq_tab_archivo_pk',
+            'seq_tab_auditoria_pk',
+            'seq_tab_padron_registro_organizacion_politica_pk',
+            'seq_tab_validacion_inscripcion_pk',
+            'seq_tab_personero_pk',
+            'seq_tab_presentacion_candidatura_pk',
+            'seq_tab_representante_organizacion_politica_pk',
+            'seq_cab_modalidad_eleccion_pk',
+            'seq_det_modalidad_eleccion_pk',
+            'seq_tab_archivo_organizacion_politica_pk',
+            'seq_tab_delegado_ganador_pk',
+            'seq_tab_mesa_pk',
+            'seq_tab_mesa_delegado_pk',
+            'seq_tab_miembro_mesa_pk',
+            'seq_tab_miembro_mesa_delegado_pk',
+            'seq_tab_miembro_organo_electoral_central_pk',
+            'seq_tab_modalidad_candidato_pk',
+            'seq_cab_candidato_lista_pk',
+            'seq_det_candidato_lista_pk',
+            'seq_tab_candidato_nominal_pk'
+        ]) AS s
+    LOOP
+        EXECUTE v_sql;
+    END LOOP;
+    RAISE NOTICE 'Procedimiento sp_puesta_cero ejecutado correctamente para el esquema: %', p_esquema;
+END;
+]]></string>
+		</procedure>
+		<procedure name="sp_puesta_cero_qa" id="664b9143-852a-451b-92ce-2fad9ab577dc" isSystem="false" params_known="n" >
+			<string><![CDATA[create function sp_puesta_cero_qa 
+DECLARE
+    v_item TEXT;
+    v_sql TEXT;
+    v_max_pk BIGINT;
+BEGIN
+    
+    FOREACH v_item IN ARRAY ARRAY[
+        'cab_candidato_lista', 'det_candidato_lista', 'det_modalidad_eleccion', 'cab_modalidad_eleccion',
+        'tab_archivo', 'tab_archivo_organizacion_politica', 'tab_auditoria', 'tab_candidato_nominal',
+        'tab_delegado_ganador', 'tab_log', 'tab_mesa', 'tab_mesa_delegado', 'tab_miembro_mesa',
+        'tab_miembro_mesa_delegado', 'tab_miembro_organo_electoral_central', 'tab_modalidad_candidato',
+        'tab_padron_registro_organizacion_politica', 'tab_personero', 'tab_presentacion_candidatura',
+        'tab_representante_organizacion_politica', 'tab_usuario', 'tab_usuario_organizacion_politica',
+        'tab_validacion_inscripcion'
+    ]
+    LOOP
+        RAISE NOTICE 'Vaciando tabla: %', v_item;
+        v_sql := format('TRUNCATE TABLE %I.%I CASCADE', p_esquema, v_item);
+        EXECUTE v_sql;
+    END LOOP;
+
+    FOREACH v_item IN ARRAY ARRAY[
+        'seq_cab_candidato_lista_pk', 'seq_det_candidato_lista_pk', 'seq_det_modalidad_eleccion_pk',
+        'seq_cab_modalidad_eleccion_pk', 'seq_tab_archivo_pk', 'seq_tab_archivo_organizacion_politica_pk',
+        'seq_tab_auditoria_pk', 'seq_tab_candidato_nominal_pk', 'seq_tab_delegado_ganador_pk',
+        'seq_tab_mesa_pk', 'seq_tab_mesa_delegado_pk', 'seq_tab_miembro_mesa_pk',
+        'seq_tab_miembro_mesa_delegado_pk', 'seq_tab_miembro_organo_electoral_central_pk',
+        'seq_tab_modalidad_candidato_pk', 'seq_tab_padron_registro_organizacion_politica_pk',
+        'seq_tab_personero_pk', 'seq_tab_presentacion_candidatura_pk', 'seq_tab_representante_organizacion_politica_pk',
+        'seq_tab_usuario_pk', 'seq_tab_usuario_organizacion_politica_pk', 'seq_tab_validacion_inscripcion_pk'
+    ]
+    LOOP
+        RAISE NOTICE 'Reiniciando secuencia: %', v_item;
+        v_sql := format('SELECT setval(%L, 1, false)', p_esquema || '.' || v_item);
+        EXECUTE v_sql;
+    END LOOP;
+
+    EXECUTE format(
+        'DELETE FROM %I.tab_organizacion_politica WHERE n_organizacion_politica_pk NOT IN (SELECT n_organizacion_politica_pk FROM %I.tab_organizacion_politica ORDER BY n_organizacion_politica_pk LIMIT 12)',
+        p_esquema, p_esquema
+    );
+    RAISE NOTICE '--- Parte 3: Reiniciando secuencias de tablas con datos al valor máximo ---';
+    EXECUTE format('SELECT COALESCE(MAX(n_organizacion_politica_pk), 1) FROM %I.tab_organizacion_politica', p_esquema) INTO v_max_pk;
+    EXECUTE format('SELECT setval(%L, %s)', p_esquema || '.seq_tab_organizacion_politica_pk', v_max_pk);
+    RAISE NOTICE 'Secuencia seq_tab_organizacion_politica_pk reiniciada a: %', v_max_pk;
+    EXECUTE format('SELECT COALESCE(MAX(n_catalogo_pk), 1) FROM %I.cab_catalogo', p_esquema) INTO v_max_pk;
+    EXECUTE format('SELECT setval(%L, %s)', p_esquema || '.seq_cab_catalogo_pk', v_max_pk);
+    RAISE NOTICE 'Secuencia seq_cab_catalogo_pk reiniciada a: %', v_max_pk;
+    EXECUTE format('SELECT COALESCE(MAX(n_det_catalogo_estructura_pk), 1) FROM %I.det_catalogo_estructura', p_esquema) INTO v_max_pk;
+    EXECUTE format('SELECT setval(%L, %s)', p_esquema || '.seq_det_catalogo_estructura_pk', v_max_pk);
+    RAISE NOTICE 'Secuencia seq_det_catalogo_estructura_pk reiniciada a: %', v_max_pk;
+    
+    EXECUTE format('SELECT COALESCE(MAX(n_det_catalogo_referencia_pk), 1) FROM %I.det_catalogo_referencia', p_esquema) INTO v_max_pk;
+    EXECUTE format('SELECT setval(%L, %s)', p_esquema || '.seq_det_catalogo_referencia_pk', v_max_pk);
+    RAISE NOTICE 'Secuencia seq_det_catalogo_referencia_pk reiniciada a: %', v_max_pk;
+    EXECUTE format('SELECT COALESCE(MAX(n_distrito_electoral_pk), 1) FROM %I.mae_distrito_electoral', p_esquema) INTO v_max_pk;
+    EXECUTE format('SELECT setval(%L, %s)', p_esquema || '.seq_mae_distrito_electoral_pk', v_max_pk);
+    RAISE NOTICE 'Secuencia seq_mae_distrito_electoral_pk reiniciada a: %', v_max_pk;
+    EXECUTE format('SELECT COALESCE(MAX(n_ubigeo_pk), 1) FROM %I.mae_ubigeo', p_esquema) INTO v_max_pk;
+    EXECUTE format('SELECT setval(%L, %s)', p_esquema || '.seq_mae_ubigeo_pk', v_max_pk);
+    RAISE NOTICE 'Secuencia seq_mae_ubigeo_pk reiniciada a: %', v_max_pk;
+    
+    EXECUTE format('SELECT COALESCE(MAX(n_fecha_fase_pk), 1) FROM %I.tab_fecha_fase', p_esquema) INTO v_max_pk;
+    EXECUTE format('SELECT setval(%L, %s)', p_esquema || '.seq_tab_fecha_fase_pk', v_max_pk);
+    RAISE NOTICE 'Secuencia seq_tab_fecha_fase_pk reiniciada a: %', v_max_pk;
+    
+END;
+]]></string>
+		</procedure>
+		<function name="fn_tabla_conteos" id="6d9ec976-62a5-42d9-9a84-320014f921c3" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION rep.fn_tabla_conteos()
+ RETURNS TABLE(tabla text, registros bigint)
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+    r RECORD;
+BEGIN
+    FOR r IN 
+        SELECT tablename 
+        FROM pg_tables 
+        WHERE schemaname = 'rep'
+    LOOP
+        EXECUTE format('SELECT COUNT(*) FROM rep.%I', r.tablename) INTO registros;
+        tabla := r.tablename;
+        RETURN NEXT;
+    END LOOP;
+END;
+$function$
+;]]></string>
+			<input_param name="tabla" jt="-1" type="text" inOut="3" />
+			<input_param name="registros" jt="-1" type="bigint" inOut="3" />
+		</function>
+		<function name="fn_valores_secuencias" id="4b03da41-2bd6-4e55-b865-d801af648ac0" isSystem="false" params_known="y" >
+			<string><![CDATA[CREATE OR REPLACE FUNCTION rep.fn_valores_secuencias()
+ RETURNS TABLE(secuencia text, valor_actual bigint)
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+    r RECORD;
+BEGIN
+    FOR r IN 
+        SELECT c.relname
+        FROM pg_class c
+        JOIN pg_namespace n ON n.oid = c.relnamespace
+        WHERE n.nspname = 'rep'
+          AND c.relkind = 'S'
+        ORDER BY c.relname
+    LOOP
+        EXECUTE format('SELECT last_value FROM rep.%I', r.relname) INTO valor_actual;
+        secuencia := r.relname;
+        RETURN NEXT;
+    END LOOP;
+END;
+$function$
+;]]></string>
+			<input_param name="secuencia" jt="-1" type="text" inOut="3" />
+			<input_param name="valor_actual" jt="-1" type="bigint" inOut="3" />
+		</function>
+	</schema>
+	<layout name="rep" id="7d22ba08-f7f4-4f04-ae3f-2a89345c0934" show_relation="columns" >
+		<entity schema="rep.rep" name="cab_candidato_lista" color="D1BEF4" x="1045" y="2546" />
+		<entity schema="rep.rep" name="cab_catalogo" color="D1BEF4" x="1045" y="3306" />
+		<entity schema="rep.rep" name="cab_modalidad_eleccion" color="F4DDBE" x="1444" y="931" />
+		<entity schema="rep.rep" name="det_candidato_lista" color="D1BEF4" x="1045" y="2869" />
+		<entity schema="rep.rep" name="det_catalogo_estructura" color="D1BEF4" x="1691" y="2869" />
+		<entity schema="rep.rep" name="det_catalogo_referencia" color="D1BEF4" x="1368" y="3306" />
+		<entity schema="rep.rep" name="det_modalidad_eleccion" color="F4DDBE" x="1767" y="931" />
+		<entity schema="rep.rep" name="mae_distrito_electoral" color="BEBEF4" x="57" y="2109" />
+		<entity schema="rep.rep" name="mae_ubigeo" color="C7F4BE" x="2375" y="2166" />
+		<entity schema="rep.rep" name="tab_archivo" color="F4DDBE" x="2147" y="95" />
+		<entity schema="rep.rep" name="tab_archivo_organizacion_politica" color="F4DDBE" x="1767" y="1311" />
+		<entity schema="rep.rep" name="tab_auditoria" color="C7F4BE" x="3021" y="1824" />
+		<entity schema="rep.rep" name="tab_candidato_nominal" color="D1BEF4" x="1368" y="2869" />
+		<entity schema="rep.rep" name="tab_delegado_ganador" color="F4DDBE" x="2147" y="532" />
+		<entity schema="rep.rep" name="tab_fecha_fase" color="F4DDBE" x="1824" y="95" />
+		<entity schema="rep.rep" name="tab_log" color="BEBEF4" x="855" y="1026" />
+		<entity schema="rep.rep" name="tab_mesa" color="C7F4BE" x="2698" y="2166" />
+		<entity schema="rep.rep" name="tab_mesa_delegado" color="BEBEF4" x="380" y="2109" />
+		<entity schema="rep.rep" name="tab_miembro_mesa" color="C7F4BE" x="3021" y="2166" />
+		<entity schema="rep.rep" name="tab_miembro_mesa_delegado" color="BEBEF4" x="741" y="1767" />
+		<entity schema="rep.rep" name="tab_miembro_organo_electoral_central" color="F4DDBE" x="2147" y="931" />
+		<entity schema="rep.rep" name="tab_modalidad_candidato" color="D1BEF4" x="2014" y="2869" />
+		<entity schema="rep.rep" name="tab_organizacion_politica" color="F4DDBE" x="1444" y="1311" />
+		<entity schema="rep.rep" name="tab_padron_registro_organizacion_politica" color="BED3F4" x="1444" y="2090" />
+		<entity schema="rep.rep" name="tab_personero" color="BEBEF4" x="1083" y="1767" />
+		<entity schema="rep.rep" name="tab_presentacion_candidatura" color="BEBEF4" x="741" y="1349" />
+		<entity schema="rep.rep" name="tab_representante_organizacion_politica" color="F4DDBE" x="1767" y="456" />
+		<entity schema="rep.rep" name="tab_usuario" color="BEBEF4" x="1083" y="1026" />
+		<entity schema="rep.rep" name="tab_usuario_organizacion_politica" color="BEBEF4" x="380" y="1767" />
+		<entity schema="rep.rep" name="tab_validacion_inscripcion" color="C7F4BE" x="2698" y="1824" />
+		<group name="empleados" color="ECF0F7" >
+			<entity schema="rep.rep" name="tab_padron_registro_organizacion_politica" />
+		</group>
+		<group name="tab_validacion_inscripcion" color="EEF7EC" >
+			<entity schema="rep.rep" name="tab_validacion_inscripcion" />
+			<entity schema="rep.rep" name="tab_auditoria" />
+			<entity schema="rep.rep" name="tab_miembro_mesa" />
+			<entity schema="rep.rep" name="tab_mesa" />
+			<entity schema="rep.rep" name="mae_ubigeo" />
+		</group>
+		<group name="cab_catalogo" color="F0ECF7" >
+			<entity schema="rep.rep" name="cab_catalogo" />
+			<entity schema="rep.rep" name="det_candidato_lista" />
+			<entity schema="rep.rep" name="cab_candidato_lista" />
+			<entity schema="rep.rep" name="tab_candidato_nominal" />
+			<entity schema="rep.rep" name="tab_modalidad_candidato" />
+			<entity schema="rep.rep" name="det_catalogo_estructura" />
+			<entity schema="rep.rep" name="det_catalogo_referencia" />
+		</group>
+		<group name="tab_log" color="ECECF7" >
+			<entity schema="rep.rep" name="tab_log" />
+			<entity schema="rep.rep" name="tab_usuario" />
+			<entity schema="rep.rep" name="tab_presentacion_candidatura" />
+			<entity schema="rep.rep" name="tab_personero" />
+			<entity schema="rep.rep" name="tab_miembro_mesa_delegado" />
+			<entity schema="rep.rep" name="mae_distrito_electoral" />
+			<entity schema="rep.rep" name="tab_usuario_organizacion_politica" />
+			<entity schema="rep.rep" name="tab_mesa_delegado" />
+		</group>
+		<group name="tab_fecha_fase" color="F7F2EC" >
+			<entity schema="rep.rep" name="tab_fecha_fase" />
+			<entity schema="rep.rep" name="tab_archivo" />
+			<entity schema="rep.rep" name="tab_representante_organizacion_politica" />
+			<entity schema="rep.rep" name="tab_organizacion_politica" />
+			<entity schema="rep.rep" name="tab_delegado_ganador" />
+			<entity schema="rep.rep" name="tab_miembro_organo_electoral_central" />
+			<entity schema="rep.rep" name="det_modalidad_eleccion" />
+			<entity schema="rep.rep" name="cab_modalidad_eleccion" />
+			<entity schema="rep.rep" name="tab_archivo_organizacion_politica" />
+		</group>
+		<script name="SQL_Editor" id="849f0ea4-23f2-45bb-b351-381015022f2c" language="SQL" >
+			<string><![CDATA[drop table prueba;
+commit;]]></string>
+		</script>
+	</layout>
+	<layout name="~Diagram with Sample Tools" id="10a1d0ac-00eb-49bd-933a-b02bb2c0c458" show_column_type="y" show_relation="columns" >
+		<entity schema="rep.rep" name="cab_candidato_lista" color="D1BEF4" x="1140" y="2508" />
+		<entity schema="rep.rep" name="cab_catalogo" color="D1BEF4" x="1140" y="3268" />
+		<entity schema="rep.rep" name="cab_modalidad_eleccion" color="F4DDBE" x="1634" y="893" />
+		<entity schema="rep.rep" name="det_candidato_lista" color="D1BEF4" x="1140" y="2831" />
+		<entity schema="rep.rep" name="det_catalogo_estructura" color="D1BEF4" x="1900" y="2831" />
+		<entity schema="rep.rep" name="det_catalogo_referencia" color="D1BEF4" x="1520" y="3268" />
+		<entity schema="rep.rep" name="det_modalidad_eleccion" color="F4DDBE" x="2014" y="893" />
+		<entity schema="rep.rep" name="mae_distrito_electoral" color="BEBEF4" x="57" y="2071" />
+		<entity schema="rep.rep" name="mae_ubigeo" color="C7F4BE" x="2698" y="2128" />
+		<entity schema="rep.rep" name="tab_archivo" color="F4DDBE" x="2432" y="57" />
+		<entity schema="rep.rep" name="tab_archivo_organizacion_politica" color="F4DDBE" x="2014" y="1273" />
+		<entity schema="rep.rep" name="tab_auditoria" color="C7F4BE" x="3458" y="1786" />
+		<entity schema="rep.rep" name="tab_candidato_nominal" color="D1BEF4" x="1520" y="2831" />
+		<entity schema="rep.rep" name="tab_delegado_ganador" color="F4DDBE" x="2432" y="494" />
+		<entity schema="rep.rep" name="tab_fecha_fase" color="F4DDBE" x="2052" y="57" />
+		<entity schema="rep.rep" name="tab_log" color="BEBEF4" x="912" y="988" />
+		<entity schema="rep.rep" name="tab_mesa" color="C7F4BE" x="3078" y="2128" />
+		<entity schema="rep.rep" name="tab_mesa_delegado" color="BEBEF4" x="437" y="2071" />
+		<entity schema="rep.rep" name="tab_miembro_mesa" color="C7F4BE" x="3458" y="2128" />
+		<entity schema="rep.rep" name="tab_miembro_mesa_delegado" color="BEBEF4" x="836" y="1729" />
+		<entity schema="rep.rep" name="tab_miembro_organo_electoral_central" color="F4DDBE" x="2432" y="893" />
+		<entity schema="rep.rep" name="tab_modalidad_candidato" color="D1BEF4" x="2280" y="2831" />
+		<entity schema="rep.rep" name="tab_organizacion_politica" color="F4DDBE" x="1634" y="1273" />
+		<entity schema="rep.rep" name="tab_padron_registro_organizacion_politica" color="BED3F4" x="1634" y="1786" />
+		<entity schema="rep.rep" name="tab_personero" color="BEBEF4" x="1216" y="1729" />
+		<entity schema="rep.rep" name="tab_presentacion_candidatura" color="BEBEF4" x="836" y="1311" />
+		<entity schema="rep.rep" name="tab_representante_organizacion_politica" color="F4DDBE" x="2014" y="418" />
+		<entity schema="rep.rep" name="tab_usuario" color="BEBEF4" x="1216" y="988" />
+		<entity schema="rep.rep" name="tab_usuario_organizacion_politica" color="BEBEF4" x="437" y="1729" />
+		<entity schema="rep.rep" name="tab_validacion_inscripcion" color="C7F4BE" x="3078" y="1786" />
+		<script name="SQL Editor" id="738a31ad-cbf9-42d7-ba3c-ae723baace40" language="SQL" >
+			<string><![CDATA[SELECT
+	n_organizacion_politica_pk, n_distrito_electoral, c_id_organizacion_politica, n_tipo_organizacion_politica, c_nombre, 
+	n_estado, n_activo, c_aud_usuario_creacion, d_aud_fecha_creacion, c_aud_usuario_modificacion, d_aud_fecha_modificacion, n_participacion, 
+	n_enviar_notificacion, n_padron_final
+FROM
+	rep.tab_organizacion_politica a;]]></string>
+		</script>
+		<browser id="37ede6da-2f5d-410b-b25d-f7917928f7fa" name="Relational Data Editor" confirm_updates="y" >
+			<browse_table schema="rep.rep" entity="tab_organizacion_politica" fk_out="n" x="20" y="20" width="270" height="-60" >
+				<browse_table schema="rep.rep" entity="cab_modalidad_eleccion" fk="cst_cab_reg_mod_elec_fk_01" fk_out="y" x="310" y="20" width="500" height="350" >
+					<browse_table schema="rep.rep" entity="det_modalidad_eleccion" fk="cst_det_reg_mod_elec_fk_01" fk_out="y" x="830" y="20" width="500" height="350" />
+				</browse_table>
+			</browse_table>
+		</browser>
+		<query id="9aecee92-c1b2-410d-afda-3bd77a197031" name="Query Builder" >
+			<query_table schema="rep.rep" name="tab_organizacion_politica" alias="top" x="57" y="57" >
+				<column name="n_organizacion_politica_pk" />
+				<column name="n_distrito_electoral" />
+				<column name="c_id_organizacion_politica" />
+				<column name="n_tipo_organizacion_politica" />
+				<column name="c_nombre" />
+				<column name="n_estado" />
+				<column name="n_activo" />
+				<column name="c_aud_usuario_creacion" />
+				<column name="d_aud_fecha_creacion" />
+				<column name="c_aud_usuario_modificacion" />
+				<column name="d_aud_fecha_modificacion" />
+				<column name="n_participacion" />
+				<column name="n_enviar_notificacion" />
+				<column name="n_padron_final" />
+				<query_table schema="rep.rep" name="cab_modalidad_eleccion" alias="cme" x="361" y="57" fk="cst_cab_reg_mod_elec_fk_01" type="Inner Join" >
+					<column name="n_modalidad_eleccion_pk" />
+					<column name="n_organizacion_politica" />
+					<column name="n_tipo_modalidad_eleccion" />
+					<column name="n_representacion" />
+					<column name="n_activo" />
+					<column name="c_aud_usuario_creacion" />
+					<column name="d_aud_fecha_creacion" />
+					<column name="c_aud_usuario_modificacion" />
+					<column name="d_aud_fecha_modificacion" />
+					<column name="n_conformidad_registro" />
+					<query_table schema="rep.rep" name="det_modalidad_eleccion" alias="dme" x="665" y="57" fk="cst_det_reg_mod_elec_fk_01" type="Inner Join" >
+						<column name="n_det_modalidad_eleccion_pk" />
+						<column name="n_modalidad_eleccion" />
+						<column name="n_distrito_electoral" />
+						<column name="n_cantidad_delegados" />
+						<column name="n_activo" />
+						<column name="c_aud_usuario_creacion" />
+						<column name="d_aud_fecha_creacion" />
+						<column name="c_aud_usuario_modificacion" />
+						<column name="d_aud_fecha_modificacion" />
+						<column name="c_observacion" />
+						<column name="c_lugar_votacion" />
+					</query_table>
+				</query_table>
+			</query_table>
+		</query>
+	</layout>
+</project>
